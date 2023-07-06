@@ -4,9 +4,13 @@ import { Login } from '../Screens/Login'
 import { Shop } from '../Screens/Shop'
 import { Contact } from '../Screens/Contact'
 
+import { AuthProvider } from '../contexts/Auth'
+
 export default function Router () {
     return (
         <BrowserRouter>
+        <AuthProvider>
+            
         <Routes>
 
         <Route path='/' element={<Home />} />
@@ -16,6 +20,8 @@ export default function Router () {
         
 
         </Routes>
+
+        </AuthProvider>
         </BrowserRouter>
     )
 }

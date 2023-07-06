@@ -8,7 +8,6 @@ import { NavLink } from 'react-router-dom'
 import {
     ContainerFooter,
     ContainerInputFooter,
-    FormFooter,
     LogoTech,
     ContainerIccons,
     MenuFooter,
@@ -22,11 +21,7 @@ export const Footer = () => {
         <ContainerFooter>
         <ContainerInputFooter>
           <h1>Fique por Dentro!</h1>
-          <p>Cadastre-se e receba nossas promoções.</p>
-          <FormFooter>
-            {/* <label>Digite seu Email...</label> */}
-            <input type="text" value="Digite seu Email..." />
-          </FormFooter>
+          <p>fale com a gente ou acompanhe nossas redes.</p>
           <LogoTech src={LogoPng} alt="" />
           <ContainerIccons>
             <InstagramLogo size={25} color="#3168c8" />
@@ -88,4 +83,3 @@ export const Footer = () => {
   
 
 }
-

@@ -5,7 +5,7 @@ import BgBody from '../../assets/img/bg01.jpg'
 
 export const ContainerBody = styled.div`
 width: 100%;
-height: 81.25rem;
+height: 1600px;
 display:flex;
 align-items:center;
 flex-direction:column;
@@ -40,6 +40,7 @@ export const ContainerProductsUl = styled.ul`
     margin-left: 20px;
     margin-right: 20px;
     justify-content: center;
+    flex-wrap: wrap;
     gap: 30px;
 
     

@@ -1,9 +1,9 @@
-import styled from "styled-components";
-
-
+import styled from 'styled-components';
 
 export const Button = styled.button`
-    background: var(--blue-400);
+ 
+   
+ background: #000;
     border-radius: 5px;
     font-weight: 700;
     font-size: 1rem;

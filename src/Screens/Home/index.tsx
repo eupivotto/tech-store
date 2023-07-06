@@ -13,7 +13,7 @@ rating: unknown;
 import { NavBar } from '../../components/Navbar';
 import { Footer } from '../../components/Footer';
 
-import axios from 'axios'
+import { api } from '../../services/api'
 import { useState, useEffect} from 'react'
 
 import {Slider} from '../../components/Slider'
@@ -42,7 +42,7 @@ import {
 export const Home = () => {
 
     //Variavel para link da API
-    const linkGetProducts = 'https://fakestoreapi.com/products?limit=5'
+    const linkGetProducts = '/products?limit=8'
     const [posts, setPosts] = useState<IDataProduct[]>([])
     
 
@@ -50,7 +50,7 @@ export const Home = () => {
     const handleGetProducts = async() => {
         
         try {
-            const response = await axios.get(linkGetProducts);
+            const response = await api.get(linkGetProducts);
             const dataProduct: IDataProduct[] = response.data;
       
       
