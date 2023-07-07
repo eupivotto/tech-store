@@ -3,6 +3,8 @@ import { Home } from '../Screens/Home'
 import { Login } from '../Screens/Login'
 import { Shop } from '../Screens/Shop'
 import { Contact } from '../Screens/Contact'
+import {Signup} from '../Screens/Signup'
+
 
 import { AuthProvider } from '../contexts/Auth'
 
@@ -17,7 +19,7 @@ export default function Router () {
         <Route path='/shop' element={<Shop />} />
         <Route path='/contact' element={<Contact />} />
         <Route path='/login' element={<Login />} />
-        
+        <Route path='/signup' element={<Signup />} />
 
         </Routes>
 
