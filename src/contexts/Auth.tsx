@@ -1,29 +1,48 @@
-import  { createContext, useState  } from "react";
+import  { ReactNode, createContext, useState  } from "react";
+import { useNavigate } from "react-router-dom";
 
 
 
 
-export const AuthContext = createContext()
+interface AuthContextData {
+    authenticated: boolean;
+    user: IUserInfo | null,
+    userLogin: (email: string, password: string) => void,
+    userLogout: () => void
+  }
+  
+type  IUserInfo = {
+  email: string,
+  password: string
+} 
 
-export const AuthProvider = ({ children }) => {
 
-    // userState com usuario iniciando nulo
-    const [ user, setUser] = useState(null) 
+export const AuthContext = createContext<AuthContextData>({
+    authenticated: false,
+    user: null,
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    userLogin: () => {},
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    userLogout: () => {},
+  });
 
-    const userLogin = (email, password) => {
+export const AuthProvider = ({ children }:{ children: ReactNode }) => {
+    
+    const navigate = useNavigate() 
+    const [ user, setUser] = useState<IUserInfo | null >(null) // userState com usuario iniciando nulo
+
+    const userLogin = (email: string, password: string) => {
         console.log('Login auth', {email, password})
-        setUser({id:'123', email})
+        setUser({password, email})
+        
     }
 
     const userLogout = () => {
         console.log('Logout')
+        setUser(null)
+        navigate('/login')
     }
 
-    //se o user for ! null 
-    //autthenticated = true
-
-    //se o user for = null
-    //autthenticated = false
 
     return(
         

@@ -6,7 +6,7 @@ interface IButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement>{
  
 }
 
-export function ButtonPrimary({ title,isLoading,...rest}:IButtonProps) {
+export function ButtonPrimary({ title, disabled, isLoading,...rest}:IButtonProps) {
     return (
         <Button{...rest }>{isLoading ? "carregando..." : title}</Button>    
 )

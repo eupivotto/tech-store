@@ -42,7 +42,7 @@ import {
 export const Home = () => {
 
     //Variavel para link da API
-    const linkGetProducts = '/products?limit=8'
+    const linkGetProducts = 'https://fakestoreapi.com/products?limit=10'
     const [posts, setPosts] = useState<IDataProduct[]>([])
     
 

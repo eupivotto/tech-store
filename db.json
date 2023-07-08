@@ -1,0 +1,34 @@
+{
+  "login": [
+    {
+      "name": "Lucas Pivotto",
+      "password": 12345,
+      "email": "lucas@example.com"
+    },
+    {
+      "name": "Fabio Lucio",
+      "password": 11123,
+      "email": "fabio@example.com"
+    }
+  ],
+  "products": [
+    {
+      "id": 223,
+      "product": "Notebook Acer",
+      "product_id": 12,
+      "value": 2300
+    },
+    {
+      "id": 224,
+      "product": "Mouse Gamer Logitech",
+      "product_id": 13,
+      "value": 250
+    },
+    {
+      "id": 225
+    },
+    {
+      "id": 226
+    }
+  ]
+}

@@ -14,7 +14,6 @@ export const ContainerHome = styled.div`
 
 export const ContainerHomeform = styled.div`
   background:  #fff 0.38;
-  border: 1px solid;
   width: 500px;
   height: 389px;
   flex-shrink: 0;
