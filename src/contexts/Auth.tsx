@@ -2,6 +2,11 @@ import  { ReactNode, createContext, useState  } from "react";
 import { useNavigate } from "react-router-dom";
 
 
+type  IUserInfo = {
+  email: string,
+  password: string
+} 
+
 
 
 interface AuthContextData {
@@ -11,10 +16,7 @@ interface AuthContextData {
     userLogout: () => void
   }
   
-type  IUserInfo = {
-  email: string,
-  password: string
-} 
+
 
 
 export const AuthContext = createContext<AuthContextData>({
@@ -30,6 +32,7 @@ export const AuthProvider = ({ children }:{ children: ReactNode }) => {
     
     const navigate = useNavigate() 
     const [ user, setUser] = useState<IUserInfo | null >(null) // userState com usuario iniciando nulo
+    
 
     const userLogin = (email: string, password: string) => {
         console.log('Login auth', {email, password})

@@ -1,14 +1,29 @@
 {
   "login": [
     {
-      "name": "Lucas Pivotto",
+      "id": 1,
       "password": 12345,
       "email": "lucas@example.com"
     },
     {
-      "name": "Fabio Lucio",
+      "id": 2,
       "password": 11123,
       "email": "fabio@example.com"
+    },
+    {
+      "id": 3,
+      "password": 12345,
+      "email": "joca@example.com"
+    },
+    {
+      "email": "brunoreismoreira10@gmail.com",
+      "password": "11112",
+      "id": 4
+    },
+    {
+      "email": "teste@testeemail.com",
+      "password": "223344",
+      "id": 5
     }
   ],
   "products": [

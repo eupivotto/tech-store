@@ -12,7 +12,11 @@ type ZLoginForm = z.infer <typeof LoginFormSchema>
 import {  useContext  } from 'react'
 import { ButtonPrimary } from '../../components/Buttton'
 import { AuthContext } from '../../contexts/Auth'
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom"
+import { registerNewUser } from '../../services/login.service'
+
+
+
 //imports hook form 
 import { useForm } from 'react-hook-form'
 
@@ -36,10 +40,6 @@ import {
 } from './styles';
 
 
-
-
-
-
 export const Login =() => {
 
     const { handleSubmit,
@@ -48,16 +48,26 @@ export const Login =() => {
         } = useForm<ZLoginForm>({
         resolver: zodResolver(LoginFormSchema)
     })
-    const navigate = useNavigate()
+    
 
-    const { userLogin } = useContext<AuthContextData>(AuthContext);
+    const { userLogin } = useContext<AuthContextData>(AuthContext)
+    const navigate = useNavigate()
   
-    const onSubmit = (data:ZLoginForm) => {  
-      userLogin(data.email, data.password)
+    const onSubmit = async (data: ZLoginForm) => {
+        try {
+          await registerNewUser(data.email, data.password);
+          userLogin(data.email, data.password)
       if (isValid) {
         localStorage.setItem('@userInfo', JSON.stringify({ emailUser: data.email }));
         navigate('/');
       }
+
+    } catch (error) {
+        // Lógica para lidar com erros na chamada da API
+        console.error(error);
+      }
+
+      console.log('Dados enviados para a API de postagem:', data)
 }
     return(
         <>
