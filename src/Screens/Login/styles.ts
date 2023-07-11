@@ -100,9 +100,6 @@ a {
   cursor: pointer;
 }
 
-  
-
-
 `
 
 
@@ -120,4 +117,4 @@ a {
   cursor: pointer;
 }
    
-`;
+`

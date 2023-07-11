@@ -1,28 +1,28 @@
 interface CategoriesProps {
-    handleGetProducts: (category: string) => Promise<void>;
+    handleGetProducts: (category: string) => Promise<void>
   }
   
 
 
 
-import { useState, useEffect } from "react";
-import { categoryApi } from "../../services/api";
-import { ContainerCategory } from "./styles";
+import { useState, useEffect } from "react"
+import { categoryApi } from "../../services/api"
+import { ContainerCategory } from "./styles"
 
 
 export const Category: React.FC<CategoriesProps> = ({handleGetProducts}) => {
     const [categories, setCategories] = useState<string[]>([]);
-    const [selectedCategory, setSelectedCategory] = useState<string>("");
+    const [selectedCategory, setSelectedCategory] = useState<string>("")
 
     
 
     const handleGetCategories = async () => {
         try {
-          const response = await categoryApi.get('');
-          const dataCategories: string[] = response.data;
+          const response = await categoryApi.get('')
+          const dataCategories: string[] = response.data
           setCategories(dataCategories);
         } catch (error) {
-          console.log('Erro ao listar categorias:', error);
+          console.log('Erro ao listar categorias:', error)
         }
       };
 

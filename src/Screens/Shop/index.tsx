@@ -8,14 +8,16 @@ interface IDataProduct {
     
     }
 
-
+import { Link } from 'react-router-dom'
 import { useState, useEffect } from "react";
+import { CaretDoubleRight } from 'phosphor-react'
+
 import { api } from "../../services/api";
 import { Footer } from "../../components/Footer";
 import { NavBar } from "../../components/Navbar";
 import { Pagination } from "../../components/Pagination";
 import { Category } from '../../components/Categories';
-import { CaretDoubleRight } from 'phosphor-react'
+
 
 import { ContainerHome,
          ContainerProductsUl,
@@ -42,6 +44,7 @@ export const Shop = () => {
     const [posts, setPosts] = useState<IDataProduct[]>([])
     const [ intensPerPage ] = useState(10) //useState para exibir 10 posts por pagina
     const [ currentPage, setCurrentPage] = useState(0) // comecando na pagina 0
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [selectedCategory, setSelectedCategory] = useState<string>("")
   
   
@@ -110,11 +113,13 @@ export const Shop = () => {
           <ContainerProductsUl>
             {currentItens.map((product) => (
               <LiProduct key={product.id}>
+                <Link to={`/product/${product.id}`}>
                 <div>
                   <TitleProduct>{product.title}</TitleProduct>
                   <ImageProduct src={product.image} alt={product.title} />
                   <PriceProduct>R$ {product.price}</PriceProduct>
                 </div>
+                </Link>
               </LiProduct>
             ))}
           </ContainerProductsUl>

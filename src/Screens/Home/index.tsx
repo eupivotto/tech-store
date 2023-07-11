@@ -13,6 +13,7 @@ rating: unknown;
 import { NavBar } from '../../components/Navbar';
 import { Footer } from '../../components/Footer';
 
+import { Link } from 'react-router-dom'
 import { api } from '../../services/api'
 import { useState, useEffect} from 'react'
 
@@ -91,12 +92,14 @@ export const Home = () => {
           <ContainerProductsUl>
             {posts.map((product) => (
               <LiProduct key={product.id}>
+                <Link to={`/product/${product.id}`}>
                 <div>
                   <TitleProduct>{product.title}</TitleProduct>
                   <TextDescription>{product.description}</TextDescription>
                   <ImageProduct src={product.image} alt={product.title} />
                   <PriceProduct>R$ {product.price}</PriceProduct>
                 </div>
+                </Link>
               </LiProduct>
             ))}
           </ContainerProductsUl>
