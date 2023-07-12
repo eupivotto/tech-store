@@ -14,3 +14,4 @@ export const categoryApi = axios.create({
 
     baseURL: 'https://fakestoreapi.com/products/categories'
 })
+

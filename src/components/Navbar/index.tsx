@@ -23,7 +23,7 @@ export const NavBar = () => {
                 </nav>
             </ContentLinks>
                 <CartUser>
-                    <ShoppingCart size={20} color="#3168c8" />
+                    <ShoppingCart size={25} color="#9cc0ff" />
                     <NavLink to="/login" title='Login'>
                         <span>Login</span>
                     </NavLink>                       

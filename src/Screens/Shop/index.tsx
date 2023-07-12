@@ -44,8 +44,8 @@ export const Shop = () => {
     const [posts, setPosts] = useState<IDataProduct[]>([])
     const [ intensPerPage ] = useState(10) //useState para exibir 10 posts por pagina
     const [ currentPage, setCurrentPage] = useState(0) // comecando na pagina 0
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const [selectedCategory, setSelectedCategory] = useState<string>("")
+    
+   
   
   
 

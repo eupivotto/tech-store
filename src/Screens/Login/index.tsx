@@ -62,7 +62,7 @@ export const Login =() => {
         navigate('/');
       }
 
-    } catch (error) {
+      } catch (error) {
         // Lógica para lidar com erros na chamada da API
         console.error(error);
       }
