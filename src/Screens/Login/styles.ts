@@ -110,11 +110,19 @@ export const ContainerButtonscreate = styled.div`
 
 span {
   font-weight: 700;
+  text-decoration: none;
 }  
 
-a { 
+p { 
   margin-top: 80px;
   cursor: pointer;
 }
+a { 
+  margin-top: 80px;
+  cursor: pointer;
+  text-decoration: none;
+  color: var(--blue-200);
+}
+
    
 `

@@ -1,22 +1,17 @@
-import  { ReactNode, createContext, useState  } from "react";
-import { useNavigate } from "react-router-dom";
-
+interface AuthContextData {
+  authenticated: boolean;
+  user: IUserInfo | null;
+  userLogin: (email: string, password: string) => void;
+  userLogout: () => void;
+}
 
 type  IUserInfo = {
   email: string,
   password: string
 } 
-
-
-
-interface AuthContextData {
-    authenticated: boolean;
-    user: IUserInfo | null,
-    userLogin: (email: string, password: string) => void,
-    userLogout: () => void
-  }
   
-
+import  { ReactNode, createContext, useState  } from "react"
+import { useNavigate } from "react-router-dom"
 
 
 export const AuthContext = createContext<AuthContextData>({

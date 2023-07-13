@@ -57,28 +57,31 @@ export const Shop = () => {
     
 
     //Consumindo a API utilizando o Axios e resgatando os dados atrves do data 
-    const handleGetProducts = async (category: string) => {
-      try {
+    const handleGetProducts = (category: string): Promise<void> => {
+           
         let url = linkGetProducts
         if (category) {
           url += `?category=${category}`
         }
 
-        const response = await api.get(url)
-        const dataProduct: IDataProduct[] = response.data
+        return api.get(url)
+        .then(response => {
+         const dataProduct: IDataProduct[] = response.data
+    
 
         //filtrando os produtos baseado em categorias
         const filteredProducts = category && category !== "todos" ? dataProduct.filter(product => product.category === category) : dataProduct;
-        setPosts(filteredProducts)
-
-      } catch (error) {
-        console.log('Erro ao listar produtos:', error)
-      }
+        setPosts(filteredProducts)       
+        
+      })
+      
+      .catch((error) => {
+        console.log('Erro ao listar produtos:', error);
+        throw error;
+      });
     }
 
-    
-    console.log('Current Items:', currentItens);
-
+      
 
     useEffect(() => {
         handleGetProducts('')

@@ -1,10 +1,14 @@
 interface AuthContextData {
     authenticated: boolean;
-    user: string,
-    userLogin: (email: string, password: string) => void,
-    userLogout: () => void
+    user: IUserInfo | null;
+    userLogin: (email: string, password: string) => void;
+    userLogout: () => void;
   }
 
+  type  IUserInfo = {
+    email: string,
+    password: string
+  } 
  
 
 type ZLoginForm = z.infer <typeof LoginFormSchema>
@@ -12,7 +16,7 @@ type ZLoginForm = z.infer <typeof LoginFormSchema>
 import {  useContext  } from 'react'
 import { ButtonPrimary } from '../../components/Buttton'
 import { AuthContext } from '../../contexts/Auth'
-import { useNavigate } from "react-router-dom"
+import { useNavigate, Link } from "react-router-dom"
 import { registerNewUser } from '../../services/login.service'
 
 
@@ -40,6 +44,7 @@ import {
 } from './styles';
 
 
+
 export const Login =() => {
 
     const { handleSubmit,
@@ -53,19 +58,21 @@ export const Login =() => {
     const { userLogin } = useContext<AuthContextData>(AuthContext)
     const navigate = useNavigate()
   
-    const onSubmit = async (data: ZLoginForm) => {
-        try {
-          await registerNewUser(data.email, data.password);
+    const onSubmit = (data: ZLoginForm) => {
+      
+          registerNewUser(data.email, data.password)
+    .then(() => {
           userLogin(data.email, data.password)
       if (isValid) {
         localStorage.setItem('@userInfo', JSON.stringify({ emailUser: data.email }));
         navigate('/');
       }
 
-      } catch (error) {
+    })
+      .catch((error) => {
         // Lógica para lidar com erros na chamada da API
-        console.error(error);
-      }
+        console.error(error)
+      });
 
       console.log('Dados enviados para a API de postagem:', data)
 }
@@ -105,7 +112,7 @@ export const Login =() => {
             </ContainerFormLogin>
  
                 <ContainerButtonscreate>
-                <a>Ainda não tem conta? <span>Crie uma conta</span></a>
+                <p>Ainda não tem conta? <Link to='/Signup'><span>Crie uma conta</span></Link></p>
                 </ContainerButtonscreate>
 
          </ContainerHomeform> 

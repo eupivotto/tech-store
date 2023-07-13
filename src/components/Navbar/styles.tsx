@@ -11,12 +11,18 @@ justify-content: space-between;
 background-color:#000;
 padding: 0px 7.5rem;
 
+@media (max-width: 768px) {
+    padding: 0 1rem;
 
+}
 `
 export const LogoTech = styled.img`
 width: 10.5625rem;
 height: 1.375rem;
 
+@media (max-width: 768px) {
+    width: 8rem; 
+  }
 
 
 `
@@ -41,6 +47,11 @@ a {
     text-decoration: none;
     gap: 4px;
     transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+
+    @media (max-width: 768px) {
+      display: none;
+    }
+
 
 }
 
@@ -70,6 +81,10 @@ a {
     text-decoration: none;
     transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
     
+    @media (max-width: 768px) {
+      display: none; /* Oculta o link "Login" em telas menores */
+    }
+
     }
     
 

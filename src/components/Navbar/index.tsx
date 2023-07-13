@@ -21,6 +21,7 @@ export const NavBar = () => {
                         <span>Contato</span>
                     </NavLink>   
                 </nav>
+                
             </ContentLinks>
                 <CartUser>
                     <ShoppingCart size={25} color="#9cc0ff" />

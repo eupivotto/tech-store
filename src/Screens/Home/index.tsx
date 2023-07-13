@@ -48,18 +48,15 @@ export const Home = () => {
     
 
     //Consumindo a API utilizando o Axios e resgatando os dados atrves do data 
-    const handleGetProducts = async() => {
-        
-        try {
-            const response = await api.get(linkGetProducts);
-            const dataProduct: IDataProduct[] = response.data;
-      
-      
-            setPosts(dataProduct);
-
-          } catch (error) {
-            console.log('Erro ao listar produtos:', error);
-          }
+    const handleGetProducts = (): void => {
+      api.get(linkGetProducts)
+        .then((response) => {
+          const dataProduct: IDataProduct[] = response.data;
+          setPosts(dataProduct)
+        })
+        .catch((error) => {
+          console.log('Erro ao listar produtos:', error)
+        })
     }
 
 
