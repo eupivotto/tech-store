@@ -7,7 +7,7 @@ export const api = axios.create({
 
 export const userApi = axios.create({
 
-    baseURL: 'http://localhost:3000/login'
+    baseURL: 'http://localhost:3000/users/login'
 })
 
 export const categoryApi = axios.create({
