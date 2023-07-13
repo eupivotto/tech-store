@@ -1,5 +1,6 @@
-import styled from 'styled-components';
+/* import styled from 'styled-components';
 import BgBody from '../../assets/img/bg01.jpg';
+export const ContainerForm=`styled.form`
 
 // Estilização do container principal da página
 
@@ -82,12 +83,11 @@ export const ContainerInputs = styled.div`
       color: var(--blue-200);
       font-weight: 200;
     }
-
-
+    & + input {
+  margin-top: 1rem;
+}
   }
 `;
-
-
 
 // Estilização do container dos botões
 
@@ -132,7 +132,4 @@ export const ContainerButtonscreate = styled.div`
     margin-top: 80px;
     cursor: pointer;
   }
-`;  
-
-
-
+`;   */

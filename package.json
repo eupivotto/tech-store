@@ -7,20 +7,25 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "fake-back": "json-server --watch db.json"
   },
   "dependencies": {
+    "@hookform/resolvers": "^3.1.1",
     "axios": "^1.4.0",
     "phosphor-react": "^1.4.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-hook-form": "^7.45.1",
     "react-modal": "^3.16.1",
     "react-router-dom": "^6.14.0",
     "react-spinners": "^0.13.8",
     "styled-components": "^6.0.1",
-    "swiper": "^9.4.1"
+    "swiper": "^9.4.1",
+    "zod": "^3.21.4"
   },
   "devDependencies": {
+    "@types/node": "^20.4.1",
     "@types/react": "^18.0.37",
     "@types/react-dom": "^18.0.11",
     "@types/react-modal": "^3.16.0",

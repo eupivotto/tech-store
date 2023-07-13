@@ -1,10 +1,41 @@
-import { useEffect, FormEvent, SetStateAction, useState, useContext } from 'react';
+interface AuthContextData {
+  authenticated: boolean;
+  user: IUserSignup | null,
+  userLogin: (email: string, password: string) => void,
+  userSignup:(
+    email:string,
+    nome:string,
+    telefone:string,
+    bairro:string,
+    rua:string,
+    cep:string,
+    complemento:string)=> void
+  userLogout: () => void
+}
+
+type IUserSignup = {
+  nome: string;
+  bairro: string;
+  rua: string;
+  cep: string;
+  complemento: string;
+  telefone: string;
+  email: string;
+};
+
+import { useEffect, useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../contexts/Auth';
 import { NavBar } from '../../components/Navbar';
 import { Footer } from '../../components/Footer';
 import { ButtonPrimary } from '../../components/Buttton';
+import { useForm } from 'react-hook-form';
+import { LoginFormSchema } from './schema';
+import { zodResolver } from '@hookform/resolvers/zod';
+import * as z from 'zod';
+import { resgisterSignup } from '../../services/login.service';
 
+/* import {NewModal} from '../../components/NewModal' */
 import {
   ContainerHome,
   ContainerFormLogin,
@@ -13,12 +44,18 @@ import {
   ContainerButtonscreate,
   ContainerHomeform,
   FormLogin,
-
 } from './styles';
 
+
+type ZLoginForm = z.infer<typeof LoginFormSchema>;
+
+  // Contexto e Navegação
+
 export const Signup = () => {
-  const { authenticated, userSignup } = useContext(AuthContext);
+  const { userSignup } = useContext <AuthContextData>(AuthContext);
   const navigate = useNavigate();
+
+// Variáveis de estado
 
   const [nome, setNome] = useState('');
   const [telefone, setTelefone] = useState('');
@@ -29,21 +66,40 @@ export const Signup = () => {
   const [complemento, setComplemento] = useState('');
   const [cadastroSucesso, setCadastroSucesso] = useState(false);
 
-  const submitCadastro = (event: FormEvent) => {
-    event.preventDefault();
-    console.log(email, nome, telefone, bairro, rua, cep, complemento);
-    userSignup(email, nome, telefone, bairro, rua, cep, complemento);
-    if (email.length && nome.length) {
-      localStorage.setItem('@userInfo', JSON.stringify({ emailUser: email }));
-      navigate('/Signup');
-      handleSalvarClick(); // Limpar os valores após salvar
-      setCadastroSucesso(true); // Exibir mensagem de sucesso
-    }
+  // Validação do formulário
+
+  const {
+    register,
+    handleSubmit,
+    formState: { isSubmitting, errors, isValid },
+  } = useForm<ZLoginForm>({
+    resolver: zodResolver(LoginFormSchema),
+  });
+
+   // Envio do formulário
+
+  const submitCadastro = async (data: ZLoginForm) => {
+    userSignup(data);
+try {
+  await resgisterSignup(data);
+  
+  userSignup(data)
+
+  if (isValid) {
+    localStorage.setItem('@userInfo', JSON.stringify({ emailUser: data.email,nomeUser:data.nome,telefoneUser:data.telefone,bairroUser:data.bairro,ruaUser:data.rua,cepUser:data.cep,complementoUser:data.complemento}));
+    navigate('/Signup');
+    handleSalvarClick(); // Limpar os valores após salvar
+    setCadastroSucesso(true); // Exibir mensagem de sucesso
+  }
+} catch (error) {
+  
+  console.error(error);
+}
+   
   };
 
-  useEffect(() => {
-    localStorage.setItem('@signupValues', JSON.stringify({ nome, telefone, email, bairro, rua, cep, complemento }));
-  }, [nome, telefone, email, bairro, rua, cep, complemento]);
+  
+   // Carregar valores armazenados em cache ao carregar a página
 
   useEffect(() => {
     const cachedValues = localStorage.getItem('@signupValues');
@@ -59,33 +115,7 @@ export const Signup = () => {
     }
   }, []);
 
-  const handleNomeChange = (e: { target: { value: SetStateAction<string> } }) => {
-    setNome(e.target.value);
-  };
-
-  const handleTelefoneChange = (e: { target: { value: SetStateAction<string> } }) => {
-    setTelefone(e.target.value);
-  };
-
-  const handleEmailChange = (e: { target: { value: SetStateAction<string> } }) => {
-    setEmail(e.target.value);
-  };
-
-  const handleBairroChange = (e: { target: { value: SetStateAction<string> } }) => {
-    setBairro(e.target.value);
-  };
-
-  const handleRuaChange = (e: { target: { value: SetStateAction<string> } }) => {
-    setRua(e.target.value);
-  };
-
-  const handleCepChange = (e: { target: { value: SetStateAction<string> } }) => {
-    setCep(e.target.value);
-  };
-
-  const handleComplementoChange = (e: { target: { value: SetStateAction<string> } }) => {
-    setComplemento(e.target.value);
-  };
+    // Limpar valores do formulário
 
   const handleSalvarClick = () => {
     setNome('');
@@ -97,6 +127,8 @@ export const Signup = () => {
     setComplemento('');
   };
 
+    // formulario TSX
+    
   return (
     <>
       <NavBar />
@@ -107,16 +139,15 @@ export const Signup = () => {
               <h2>Usuário cadastrado com sucesso!</h2>
             ) : (
               <>
-                <FormLogin onSubmit={submitCadastro}>
+                <FormLogin onSubmit={handleSubmit(submitCadastro)}>
                   <h1>Cadastro de Usuário</h1>
 
                   <ContainerInputs>
                     <label>Nome</label>
                     <input
-                      placeholder="Digite o nome do produto..."
+                      placeholder="Digite o nome do usuário..."
                       type="text"
-                      value={nome}
-                      onChange={handleNomeChange}
+                      {...register('nome')}
                     />
                   </ContainerInputs>
 
@@ -125,9 +156,9 @@ export const Signup = () => {
                     <input
                       placeholder="Digite o telefone..."
                       type="text"
-                      value={telefone}
-                      onChange={handleTelefoneChange}
+                      {...register('telefone')}
                     />
+                    <p>{errors.telefone?.message}</p>
                   </ContainerInputs>
 
                   <ContainerInputs>
@@ -135,9 +166,9 @@ export const Signup = () => {
                     <input
                       placeholder="Digite o email..."
                       type="email"
-                      value={email}
-                      onChange={handleEmailChange}
+                      {...register('email')}
                     />
+                    <p>{errors.email?.message}</p>
                   </ContainerInputs>
 
                   <ContainerInputs>
@@ -145,8 +176,7 @@ export const Signup = () => {
                     <input
                       placeholder="Digite o bairro..."
                       type="text"
-                      value={bairro}
-                      onChange={handleBairroChange}
+                      {...register('bairro')}
                     />
                   </ContainerInputs>
 
@@ -155,47 +185,52 @@ export const Signup = () => {
                     <input
                       placeholder="Digite a rua..."
                       type="text"
-                      value={rua}
-                      onChange={handleRuaChange}
+                      {...register('rua')}
                     />
                   </ContainerInputs>
 
                   <ContainerInputs>
                     <label>CEP</label>
                     <input
-                      placeholder="Digite o CEP..."                
+                      placeholder="Digite o CEP..."
                       type="text"
-                      value={cep}
-                      onChange={handleCepChange}
+                      {...register('cep')}
                     />
+                    <p>{errors.cep?.message}</p>
                   </ContainerInputs>
-    
+
                   <ContainerInputs>
                     <label>Complemento</label>
                     <input
                       placeholder="Digite o complemento..."
                       type="text"
-                      value={complemento}
-                      onChange={handleComplementoChange}
+                      {...register('complemento')}
                     />
                   </ContainerInputs>
-    
+
                   <ContainerButtons>
-                  
-                  <ButtonPrimary type="submit" title={'Salvar'} isLoading={false} />
-                  
+                    <ButtonPrimary type="submit" title="Salvar" disabled={isSubmitting} isLoading={false} />
                   </ContainerButtons>
                 </FormLogin>
               </>
             )}
           </ContainerFormLogin>
-    
+
           <ContainerButtonscreate>
             <a href="/">Voltar</a>
           </ContainerButtonscreate>
         </ContainerHomeform>
       </ContainerHome>
+
+{/*       <NewModal isOpen={true} contentLabelText='modal new Sales' onRequestClose={() => {}} titleModal='Cadastrar Usuário' handleSubmitFormModal={() => console.log('teste')}>
+                   
+                
+</NewModal>
+ */}
+     
       <Footer />
+
     </>
-    );
-  };
+     
+  );
+};

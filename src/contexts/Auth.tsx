@@ -1,4 +1,5 @@
-import { createContext, useState } from "react";
+import  { ReactNode, createContext, useState  } from "react";
+
 
 type IUserSignup = {
   nome: string;
@@ -10,23 +11,33 @@ type IUserSignup = {
   email: string;
 };
 
-interface IAuthContext {
+interface AuthContextData {
   authenticated: boolean;
-  user: IUserSignup | null;
-  userLogin: (email: string, password: string) => void;
-  userLogout: () => void;
-  userSignup: (userData: IUserSignup) => void;
+  user: IUserSignup | null,
+  userLogin: (email: string, password: string) => void,
+  userSignup:(
+    email:string,
+    nome:string,
+    telefone:string,
+    bairro:string,
+    rua:string,
+    cep:string,
+    complemento:string)=> void
+  userLogout: () => void
 }
 
-export const AuthContext = createContext<IAuthContext>({
+export const AuthContext = createContext<AuthContextData>({
   authenticated: false,
   user: null,
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   userLogin: () => {},
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   userLogout: () => {},
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   userSignup: () => {},
 });
 
-export const AuthProvider: React.FC = ({ children }) => {
+export const AuthProvider = ({ children }:{children:ReactNode}) => {
   // userState com usuario iniciando nulo
   const [user, setUser] = useState<IUserSignup | null>(null);
 
