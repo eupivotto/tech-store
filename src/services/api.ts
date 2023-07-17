@@ -1,13 +1,13 @@
 import axios from 'axios'
 
 export const api = axios.create({
-    baseURL: 'https://fakestoreapi.com/product'
+    baseURL: 'https://fakestoreapi.com/products'
 })
 
 
 export const userApi = axios.create({
 
-    baseURL: 'http://localhost:3000/users/login'
+    baseURL: 'http://localhost:3000/login'
 })
 
 export const categoryApi = axios.create({

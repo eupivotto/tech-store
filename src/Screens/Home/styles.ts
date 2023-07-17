@@ -5,7 +5,7 @@ import BgBody from '../../assets/img/bg01.jpg'
 
 export const ContainerBody = styled.div`
 width: 100%;
-height: 1600px;
+height: 2900px;
 display:flex;
 align-items:center;
 flex-direction:column;
@@ -72,14 +72,7 @@ export const TitleProduct = styled.p`
 
 
 `
-export const TextDescription = styled.p`
-   
-    font-size:12px;
-    margin-bottom:10px;
-    color: var(--blue-400);
 
-
-`
 export const ImageProduct = styled.img`
     width: 100px;
     height: 100px;
@@ -98,10 +91,19 @@ export const PriceProduct = styled.p`
 
 
 export const ContainerSlider = styled.div`
-width:47.5rem;
-height: 18.125rem;
+width:75rem;
+height: 18.75rem;
 position: relative;
-z-index: 9; 
+z-index: 1; 
+
+
+
+
+`
+export const ContainerCartHome = styled.div`
+
+position: relative;
+z-index: 2; 
 
 
 
@@ -119,5 +121,34 @@ justify-content: center;
 
 
 
+
+`
+
+export const ButtonCartCard = styled.div`
+
+    margin-top:1.25rem;
+
+    
+
+button{
+    width:200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    background-color: var(--blue-400);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+
+    
+    
+}
+
+button:hover {
+    background-color: var(--blue-300);
+    
+}
 
 `

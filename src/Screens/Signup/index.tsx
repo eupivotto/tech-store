@@ -9,7 +9,7 @@ export const Signup = () => {
          
          <NavBar/>
          <ContainerHome>
-            <h1>Signup</h1>
+            
          </ContainerHome>
          <Footer/>
         

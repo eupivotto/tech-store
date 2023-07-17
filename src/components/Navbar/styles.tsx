@@ -10,6 +10,9 @@ align-items: center;
 justify-content: space-between;
 background-color:#000;
 padding: 0px 7.5rem;
+position: fixed;
+top: 0;
+z-index: 2;
 
 @media (max-width: 768px) {
     padding: 0 1rem;
@@ -81,9 +84,9 @@ a {
     text-decoration: none;
     transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
     
-    @media (max-width: 768px) {
-      display: none; /* Oculta o link "Login" em telas menores */
-    }
+    /* @media (max-width: 768px) {
+      display: none; 
+    } */
 
     }
     

@@ -1,7 +1,7 @@
 import  LogoPng from '../../assets/img/logotech.png'
-import { ShoppingCart } from 'phosphor-react'
 import { NavLink } from 'react-router-dom'
 import {HeaderNav, ContentLinks, CartUser, LogoTech} from './styles'
+import { CartButton } from '../../components/CartPage'
 
 
 export const NavBar = () => {
@@ -9,6 +9,7 @@ export const NavBar = () => {
         <HeaderNav>
             <ContentLinks>
                 <LogoTech src= {LogoPng} alt="" />
+                
 
                 <nav> 
                     <NavLink to="/" title='Home'>
@@ -24,9 +25,10 @@ export const NavBar = () => {
                 
             </ContentLinks>
                 <CartUser>
-                    <ShoppingCart size={25} color="#9cc0ff" />
+                    <CartButton/>
                     <NavLink to="/login" title='Login'>
                         <span>Login</span>
+                        
                     </NavLink>                       
                 </CartUser>                       
         </HeaderNav>
