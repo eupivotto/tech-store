@@ -22,7 +22,7 @@ export const CartInfo = styled.div`
 font-size: 12px;
 
 h3{
-    font-weight:300;
+    font-weight:600;
     color: var(--blue-400);
     margin-bottom: 5px;
 }
@@ -35,9 +35,15 @@ h2{
     }
 
 button{
-    background: none;
-    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: red;
+    width: 30px;
+    height: 30px;
     cursor: pointer;
+    border-radius: 3px;
+    border: none;
    
 
     
@@ -46,3 +52,4 @@ button{
 
 
 `
+

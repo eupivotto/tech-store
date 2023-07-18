@@ -1,4 +1,6 @@
 import { IDataProduct } from '../../services/types';
+import { useContext } from 'react';
+import { CartContext } from '../../contexts/Cartcontext';
 
 
 interface ICartItemProps {
@@ -12,16 +14,26 @@ import { Trash } from 'phosphor-react'
 
 import { ContainerCartItems,
          CartItemImg,
-         CartInfo,   
+         CartInfo,
+      
 
 
 } from './styles'
 
+
 export const CartItems: React.FC<ICartItemProps> = ({ data }) => {
 
-    const {image, title, price} = data
+    const {id, image, title, price} = data
 
+    const { cartItems, setCartItems } = useContext(CartContext)
+    const handleRemoveItem = () =>{
 
+     const updateCartItems = cartItems.filter((item) => item.id != id)
+     setCartItems(updateCartItems)
+        
+    }
+    
+   
     return (
         <>
         
@@ -29,13 +41,14 @@ export const CartItems: React.FC<ICartItemProps> = ({ data }) => {
             <CartItemImg src= {image} alt="" />
 
             
-            <CartInfo>
+            <CartInfo> 
+
                 <h3> {title} </h3>
                 <h2> {price} </h2>
-                <button type="button">
-                <Trash size={20} color="#3168c8" />
+                <button type="button" onClick={handleRemoveItem}>
+                <Trash size={20} color="#ffffff" />
                 </button>
-
+               
             </CartInfo>
         </ContainerCartItems>
         

@@ -6,6 +6,7 @@ interface ICartContext {
   addToCart: (item: IDataProduct) => void;
   isCartVisible: boolean;
   toggleCartVisibility: () => void;
+  setCartItems: (items: IDataProduct[]) => void;
 }
 
 interface ICartProviderProps {
@@ -14,6 +15,8 @@ interface ICartProviderProps {
 
 export const CartContext = createContext<ICartContext>({
     cartItems: [],
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    setCartItems: () => {},
     // eslint-disable-next-line @typescript-eslint/no-empty-function
     addToCart: () => { },
     isCartVisible: false,
@@ -39,19 +42,19 @@ export const CartProvider: React.FC<ICartProviderProps> = ({ children }) => {
 
 
   useEffect(() => {
-    // Salvando os cartItems no localStorage
+    // Salvando cartItems no localStorage
     localStorage.setItem('cartItems', JSON.stringify(cartItems));
   }, [cartItems])
 
 
   useEffect(() => {
-    // Salvando os cartItems no localStorage sempre que houver uma alteração
+    // Salvando cartItems no localStorage sempre que houver uma alteração
     localStorage.setItem('cartItems', JSON.stringify(cartItems));
   }, [cartItems])
 
-  
+
   return (
-    <CartContext.Provider value={{ cartItems, addToCart, isCartVisible, toggleCartVisibility }}>
+    <CartContext.Provider value={{ cartItems, setCartItems, addToCart, isCartVisible, toggleCartVisibility }}>
       {children}
     </CartContext.Provider>
   );

@@ -7,7 +7,7 @@ import BgBody from '../../assets/img/bg01.jpg'
 
 export const ContainerHome = styled.div`
   
-    height: 68.125rem;
+    height: 100vh;
     width: 100%;
     margin-top: 500px;
     display: flex;
@@ -22,11 +22,12 @@ export const ContainerHome = styled.div`
     }
 `
 export const ContainerTitle = styled.div`
-  
+    
     height: 12.5rem;
     width: 100%;
     display: flex;
     align-items: center;
+    margin-top: 400px;
     
 
     background-color: #fff;
@@ -88,7 +89,7 @@ export const ContainerProductsUl = styled.ul`
 `
 export const LiProduct = styled.li`
     width: 275px;
-    height: 275px;
+    height: 400px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -127,4 +128,32 @@ export const PriceProduct = styled.p`
     font-weight:bold;
 
     
+`
+export const ButtonCartCard = styled.div`
+
+    margin-top:1.25rem;
+
+    
+
+button{
+    width:200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    background-color: var(--blue-400);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+
+    
+    
+}
+
+button:hover {
+    background-color: var(--blue-300);
+    
+}
+
 `

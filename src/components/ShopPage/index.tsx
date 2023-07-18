@@ -10,7 +10,10 @@ interface IDataProduct {
 
 import { Link } from 'react-router-dom'
 import { useState, useEffect } from "react"
+import { useCart } from '../../contexts/Cartcontext'
 import { CaretDoubleRight } from 'phosphor-react'
+import { ShoppingCart } from 'phosphor-react'
+import { Loading } from '../Loading'
 
 import { api } from "../../services/api"
 import { Pagination } from "../../components/Pagination"
@@ -29,9 +32,11 @@ import { ContainerHome,
          ContainerFilters,
          DivPagination,
          DivCategory,
-         BoxIcon
+         BoxIcon,
+         ButtonCartCard
 
 } from "./styles";
+
 
 
 
@@ -41,10 +46,13 @@ export const ShopPage = () => {
     //Variavel para link da API
     const linkGetProducts = 'https://fakestoreapi.com/products'
     
+    
     //hooks 
     const [posts, setPosts] = useState<IDataProduct[]>([])
     const [ intensPerPage ] = useState(10) //useState para exibir 10 posts por pagina
     const [ currentPage, setCurrentPage] = useState(0) // comecando na pagina 0
+    const [loading, setLoading] = useState (true)
+    const { addToCart } = useCart()
     
    
   
@@ -86,6 +94,7 @@ export const ShopPage = () => {
 
     useEffect(() => {
         handleGetProducts('')
+        setLoading(false)
     }, [])
 
 
@@ -112,21 +121,33 @@ export const ShopPage = () => {
         </ContainerFilters>
         
 
-      {posts.length > 0 && (
-          <ContainerProductsUl>
-            {currentItens.map((product) => (
-              <LiProduct key={product.id}>
-                <Link to={`/product/${product.id}`}>
-                <div>
-                  <TitleProduct>{product.title}</TitleProduct>
-                  <ImageProduct src={product.image} alt={product.title} />
-                  <PriceProduct>R$ {product.price}</PriceProduct>
-                </div>
-                </Link>
-              </LiProduct>
-            ))}
-          </ContainerProductsUl>
-        )}
+        {loading ? (
+        <Loading />
+        ) : (
+        posts.length > 0 && (
+            <ContainerProductsUl>  
+              {posts.map((product) => (
+                <LiProduct key={product.id}>
+                  
+                  <div>
+                  <Link to={`/product/${product.id}`}>
+                    <TitleProduct>{product.title}</TitleProduct>
+                    <ImageProduct src={product.image} alt={product.title} />
+                  </Link>
+                    <PriceProduct>R$ {product.price}</PriceProduct>
+                    <ButtonCartCard>
+                      <button type="button" onClick={() => addToCart(product)}>
+                       <p>Adicionar ao Carrinho</p> 
+                      <ShoppingCart size={25} color="#9cc0ff" />
+                      </button>
+                    </ButtonCartCard>
+                  </div>
+                  
+                </LiProduct>
+              ))}
+            </ContainerProductsUl>
+        )
+     )}
 
         </ContainerHome>
  

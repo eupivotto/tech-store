@@ -35,7 +35,7 @@ export const Slider = () => {
         navigation
         pagination={{ clickable: true }}
         scrollbar={{ draggable: true }}
-        onSwiper={(swiper: any) => console.log(swiper)}
+        onSwiper={(swiper: unknown) => console.log(swiper)}
         onSlideChange={() => console.log('slide change')}
         >
         <SwiperSlide><img src={SliderMac} alt="" /></SwiperSlide>

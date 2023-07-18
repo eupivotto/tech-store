@@ -5,7 +5,7 @@ import BgBody from '../../assets/img/bg01.jpg'
 
 export const ContainerBody = styled.div`
 width: 100%;
-height: 2900px;
+height: 231.25rem;
 display:flex;
 align-items:center;
 flex-direction:column;

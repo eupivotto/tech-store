@@ -3,11 +3,13 @@ interface AuthContextData {
   user: IUserInfo | null;
   userLogin: (email: string, password: string) => void;
   userLogout: () => void;
+  userAdmin: () =>  boolean;
 }
 
 type  IUserInfo = {
   email: string,
-  password: string
+  password: string,
+  isAdmin: boolean
 } 
   
 import  { ReactNode, createContext, useState  } from "react"
@@ -21,6 +23,8 @@ export const AuthContext = createContext<AuthContextData>({
     userLogin: () => {},
     // eslint-disable-next-line @typescript-eslint/no-empty-function
     userLogout: () => {},
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    userAdmin: () => false,
   });
 
 export const AuthProvider = ({ children }:{ children: ReactNode }) => {
@@ -31,8 +35,12 @@ export const AuthProvider = ({ children }:{ children: ReactNode }) => {
 
     const userLogin = (email: string, password: string) => {
         console.log('Login auth', {email, password})
-        setUser({password, email})
+        setUser({password, email, isAdmin: false})
         
+    }
+
+    const userAdmin = () => {
+      return user?.isAdmin || false;
     }
 
     const userLogout = () => {
@@ -45,7 +53,11 @@ export const AuthProvider = ({ children }:{ children: ReactNode }) => {
     return(
         
         <AuthContext.Provider 
-        value = {{authenticated: !!user, user, userLogin, userLogout}}>
+        value = {{authenticated: !!user, 
+                  user,
+                  userLogin,
+                  userLogout,
+                  userAdmin }}>
          {children}   
         </AuthContext.Provider>
         

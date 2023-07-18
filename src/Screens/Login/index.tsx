@@ -3,17 +3,19 @@ interface AuthContextData {
     user: IUserInfo | null;
     userLogin: (email: string, password: string) => void;
     userLogout: () => void;
+    userAdmin: () =>  boolean;
   }
 
   type  IUserInfo = {
     email: string,
-    password: string
+    password: string,
+    isAdmin: boolean
   } 
  
 
 type ZLoginForm = z.infer <typeof LoginFormSchema>
 
-import {  useContext  } from 'react'
+import {  useContext, useEffect  } from 'react'
 import { ButtonPrimary } from '../../components/Buttton'
 import { AuthContext } from '../../contexts/Auth'
 import { useNavigate, Link } from "react-router-dom"
@@ -27,7 +29,7 @@ import { useForm } from 'react-hook-form'
 //imports zod
 import * as z from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod';
-import { LoginFormSchema } from './scehma';
+import { AdminLoginFormSchema, LoginFormSchema } from './scehma';
 
 // imports styles 
 import { NavBar } from '../../components/Navbar'
@@ -42,6 +44,7 @@ import {
     FormLogin
    
 } from './styles';
+import { userApiAdmin } from '../../services/api';
 
 
 
@@ -55,26 +58,57 @@ export const Login =() => {
     })
     
 
-    const { userLogin } = useContext<AuthContextData>(AuthContext)
+    const { userLogin, userAdmin } = useContext<AuthContextData>(AuthContext)
+    
+    const isAdmin =userAdmin()
     const navigate = useNavigate()
+
+    useEffect(() => {
+      if (isAdmin) {
+        navigate('/')
+      }
+    },[isAdmin, navigate])
   
     const onSubmit = (data: ZLoginForm) => {
       
-          registerNewUser(data.email, data.password)
-    .then(() => {
+      registerNewUser(data.email, data.password)
+        .then(() => {
           userLogin(data.email, data.password)
-      if (isValid) {
-        localStorage.setItem('@userInfo', JSON.stringify({ emailUser: data.email }));
-        navigate('/');
+          if (isValid) {
+            localStorage.setItem('@userInfo', JSON.stringify({ emailUser: data.email }));
+             navigate('/');
       }
 
     })
       .catch((error) => {
         // Lógica para lidar com erros na chamada da API
-        console.error(error)
+        if (error.response){
+          if (error.response.status === 404) {
+            console.error('Usuário não encontrado')
+          }
+        }
       });
 
       console.log('Dados enviados para a API de postagem:', data)
+
+      const adminFormValidation = AdminLoginFormSchema.safeParse(data)
+      if (!adminFormValidation.success) {
+        console.error ('Dados inválidos para API de Administrdores:', adminFormValidation.error)
+        return
+      } 
+
+      userApiAdmin
+      .post('/login', adminFormValidation.data)
+      .then((response) =>{
+        console.log('Resposta da API de administradores:', response.data)
+
+      })
+
+      .catch((error) =>{
+        console.error('Erro na chamada da API de Administradores:', error)
+      })
+      
+      console.log('Dados enviados para a API de postagem')
 }
     return(
         <>

@@ -7,7 +7,12 @@ export const api = axios.create({
 
 export const userApi = axios.create({
 
-    baseURL: 'http://localhost:3000/login'
+    baseURL: 'https://tech-store-8fff127c84e2.herokuapp.com/users/login'
+})
+
+export const userApiAdmin = axios.create({
+
+    baseURL: 'https://tech-store-8fff127c84e2.herokuapp.com/admin/login'
 })
 
 export const categoryApi = axios.create({

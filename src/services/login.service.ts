@@ -7,3 +7,5 @@ export const registerNewUser = async (email: string, password: string) => {
     
     return response.data 
 }
+
+
