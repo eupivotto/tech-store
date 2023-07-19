@@ -4,22 +4,22 @@ interface AuthContextData {
   userLogin: (email: string, password: string) => void,
   userSignup:(
     email:string,
-    nome:string,
-    telefone:string,
-    bairro:string,
-    rua:string,
-    cep:string,
-    complemento:string)=> void
+    name:string,
+    telephone:string,
+    road:string,
+    Adress:string,
+    Zipcode:string,
+    password:string)=> void
   userLogout: () => void
 }
 
 type IUserSignup = {
-  nome: string;
-  bairro: string;
-  rua: string;
-  cep: string;
-  complemento: string;
-  telefone: string;
+  name: string;
+  road: string;
+  Adress: string;
+  Zipcode: string;
+  password: string;
+  contato: string;
   email: string;
 };
 
@@ -34,6 +34,7 @@ import { LoginFormSchema } from './schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { resgisterSignup } from '../../services/login.service';
+
 
 /* import {NewModal} from '../../components/NewModal' */
 import {
@@ -57,13 +58,13 @@ export const Signup = () => {
 
 // Variáveis de estado
 
-  const [nome, setNome] = useState('');
-  const [telefone, setTelefone] = useState('');
+  const [name, setName] = useState('');
+  const [contato, setContato] = useState('');
   const [email, setEmail] = useState('');
-  const [bairro, setBairro] = useState('');
-  const [rua, setRua] = useState('');
-  const [cep, setCep] = useState('');
-  const [complemento, setComplemento] = useState('');
+  const [road, setRoad] = useState('');
+  const [Adress, setAdress] = useState('');
+  const [Zipcode, setZipcode] = useState('');
+  const [password, setPassword] = useState('');
   const [cadastroSucesso, setCadastroSucesso] = useState(false);
 
   // Validação do formulário
@@ -86,8 +87,8 @@ try {
   userSignup(data)
 
   if (isValid) {
-    localStorage.setItem('@userInfo', JSON.stringify({ emailUser: data.email,nomeUser:data.nome,telefoneUser:data.telefone,bairroUser:data.bairro,ruaUser:data.rua,cepUser:data.cep,complementoUser:data.complemento}));
-    navigate('/Signup');
+    localStorage.setItem('@userInfo', JSON.stringify({ data }));
+    navigate('/');
     handleSalvarClick(); // Limpar os valores após salvar
     setCadastroSucesso(true); // Exibir mensagem de sucesso
   }
@@ -104,27 +105,27 @@ try {
   useEffect(() => {
     const cachedValues = localStorage.getItem('@signupValues');
     if (cachedValues) {
-      const { nome, telefone, email, bairro, rua, cep, complemento } = JSON.parse(cachedValues);
-      setNome(nome);
-      setTelefone(telefone);
+      const { name, contato, email, road, Adress, Zipcode, password } = JSON.parse(cachedValues);
+      setName(name);
+      setContato(contato);
       setEmail(email);
-      setBairro(bairro);
-      setRua(rua);
-      setCep(cep);
-      setComplemento(complemento);
+      setRoad(road);
+      setAdress(Adress);
+      setZipcode(Zipcode);
+      setPassword(password);
     }
   }, []);
 
     // Limpar valores do formulário
 
   const handleSalvarClick = () => {
-    setNome('');
-    setTelefone('');
+    setName('');
+    setContato('');
     setEmail('');
-    setBairro('');
-    setRua('');
-    setCep('');
-    setComplemento('');
+    setRoad('');
+    setAdress('');
+    setZipcode('');
+    setPassword('');
   };
 
     // formulario TSX
@@ -145,9 +146,9 @@ try {
                   <ContainerInputs>
                     <label>Nome</label>
                     <input
-                      placeholder="Digite o nome do usuário..."
+                      placeholder="Digite o name do usuário..."
                       type="text"
-                      {...register('nome')}
+                      {...register('name')}
                     />
                   </ContainerInputs>
 
@@ -156,9 +157,9 @@ try {
                     <input
                       placeholder="Digite o telefone..."
                       type="text"
-                      {...register('telefone')}
+                      {...register('contato')}
                     />
-                    <p>{errors.telefone?.message}</p>
+                    <p>{errors.contato?.message}</p>
                   </ContainerInputs>
 
                   <ContainerInputs>
@@ -176,7 +177,7 @@ try {
                     <input
                       placeholder="Digite o bairro..."
                       type="text"
-                      {...register('bairro')}
+                      {...register('road')}
                     />
                   </ContainerInputs>
 
@@ -185,7 +186,7 @@ try {
                     <input
                       placeholder="Digite a rua..."
                       type="text"
-                      {...register('rua')}
+                      {...register('Adress')}
                     />
                   </ContainerInputs>
 
@@ -194,18 +195,19 @@ try {
                     <input
                       placeholder="Digite o CEP..."
                       type="text"
-                      {...register('cep')}
+                      {...register('Zipcode')}
                     />
-                    <p>{errors.cep?.message}</p>
+                    <p>{errors.Zipcode?.message}</p>
                   </ContainerInputs>
 
                   <ContainerInputs>
-                    <label>Complemento</label>
+                    <label>Senha</label>
                     <input
-                      placeholder="Digite o complemento..."
-                      type="text"
-                      {...register('complemento')}
+                      placeholder="Digite a senha..."
+                      type="password"
+                      {...register('password')}
                     />
+                      <p>{errors.password?.message}</p>
                   </ContainerInputs>
 
                   <ContainerButtons>

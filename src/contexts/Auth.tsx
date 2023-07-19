@@ -2,13 +2,13 @@ import  { ReactNode, createContext, useState  } from "react";
 
 
 type IUserSignup = {
-  nome: string;
-  bairro: string;
-  rua: string;
-  cep: string;
-  complemento: string;
-  telefone: string;
-  email: string;
+    email:string,
+    name:string,
+    contato:string,
+    Adress:string,
+    road:string,
+    Zipcode:string,
+    password:string
 };
 
 interface AuthContextData {
@@ -17,12 +17,12 @@ interface AuthContextData {
   userLogin: (email: string, password: string) => void,
   userSignup:(
     email:string,
-    nome:string,
-    telefone:string,
-    bairro:string,
-    rua:string,
-    cep:string,
-    complemento:string)=> void
+    name:string,
+    contato:string,
+    Adress:string,
+    road:string,
+    Zipcode:string,
+    password:string)=> void,
   userLogout: () => void
 }
 

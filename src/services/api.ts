@@ -5,5 +5,10 @@ export const api = axios.create({
 })
 
 export const signupapi = axios.create({
-    baseURL: ' http://localhost:3000/signup'
-})
+    baseURL: 'https://tech-store-8fff127c84e2.herokuapp.com/users/create'
+}) 
+
+/* export const signupapi = axios.create({
+    baseURL: 'https://tech-store-8fff127c84e2.herokuapp.com',
+  }); */
+  
