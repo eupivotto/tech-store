@@ -11,6 +11,10 @@ type IUserSignup = {
     password:string
 };
 
+type IUserAdminPanel = {
+  name: string;
+  // Add other fields specific to AdministrativePanel here...
+};
 interface AuthContextData {
   authenticated: boolean;
   user: IUserSignup | null,
@@ -23,8 +27,13 @@ interface AuthContextData {
     road:string,
     Zipcode:string,
     password:string)=> void,
+    userAdminPanel: (name: string) => void,
   userLogout: () => void
 }
+
+
+
+
 
 export const AuthContext = createContext<AuthContextData>({
   authenticated: false,
@@ -35,6 +44,8 @@ export const AuthContext = createContext<AuthContextData>({
   userLogout: () => {},
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   userSignup: () => {},
+  
+  userAdminPanel: () => {},
 });
 
 export const AuthProvider = ({ children }:{children:ReactNode}) => {
@@ -51,6 +62,12 @@ export const AuthProvider = ({ children }:{children:ReactNode}) => {
     setUser(userData);
   };
 
+  
+  const userAdminPanel = (userData: IUserSignup) => {
+    console.log('AdminPanel auth', userData);
+    setUser(userData);
+  };
+
   const userLogout = () => {
     console.log('Logout');
   };
@@ -59,7 +76,7 @@ export const AuthProvider = ({ children }:{children:ReactNode}) => {
 
   return (
     <AuthContext.Provider
-      value={{ authenticated, user, userLogin, userLogout, userSignup }}
+      value={{ authenticated, user, userLogin, userLogout, userSignup,userAdminPanel }}
     >
       {children}
     </AuthContext.Provider>

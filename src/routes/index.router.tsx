@@ -4,7 +4,7 @@ import { Login } from '../Screens/Login'
 import { Shop } from '../Screens/Shop'
 import { Contact } from '../Screens/Contact'
 import {Signup} from '../Screens/Signup'
-
+import {AdministrativePanel} from '../Screens/AdministrativePanel'
 
 import { AuthProvider } from '../contexts/Auth'
 
@@ -20,7 +20,7 @@ export default function Router () {
         <Route path='/contact' element={<Contact />} />
         <Route path='/login' element={<Login />} />
         <Route path='/signup' element={<Signup />} />
-    
+        <Route path='/administrativepanel' element={<AdministrativePanel />} />
         </Routes>
 
         </AuthProvider>
