@@ -9,8 +9,9 @@ import { AuthContext } from '../../contexts/Auth'
 
 export const NavBar = () => {
 
-    const { authenticated, user } = useContext(AuthContext);
-    const isAdmin = user?.isAdmin || false;
+    const { user } = useContext(AuthContext);
+    const isAdmin = user?.isAdmin === true
+   
 
     return (
         <HeaderNav>

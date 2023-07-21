@@ -40,7 +40,7 @@ export const ContainerCart = styled.div`
 
 export const CartItemsStyle = styled.div` 
    display: grid;
-   grid-template-columns: 1fr 1fr;
+   grid-template-columns: 1fr;
    gap: 10px;
    color: var(--blue-300);
    margin-left:20px;
@@ -124,5 +124,12 @@ border: none;
 border-radius: 6px;
 color: #fff;
 cursor: pointer;
+
+`
+export const ButtonCloseCart = styled.div`
+position: relative;
+cursor: pointer;
+
+
 
 `

@@ -1,6 +1,7 @@
 
   import { IDataProduct } from '../../services/types'
   import { useCart } from '../../contexts/Cartcontext'
+  
 
 
   import { NavBar } from '../../components/Navbar'
@@ -42,7 +43,7 @@ import { ShopPage } from '../../components/ShopPage';
   export const Home = () => {
   
       //Variavel para link da API
-      const linkGetProducts = 'https://fakestoreapi.com/products?limit=10'
+      const linkGetProducts = 'https://tech-store-8fff127c84e2.herokuapp.com/product'
       const { addToCart } = useCart()
       const [posts, setPosts] = useState<IDataProduct[]>([])
       const [loading, setLoading] = useState (true)
@@ -101,8 +102,8 @@ import { ShopPage } from '../../components/ShopPage';
                   
                   <div>
                   <Link to={`/product/${product.id}`}>
-                    <TitleProduct>{product.title}</TitleProduct>
-                    <ImageProduct src={product.image} alt={product.title} />
+                    <TitleProduct>{product.name}</TitleProduct>
+                    <ImageProduct src={product.image} alt={product.name} />
                   </Link>
                     <PriceProduct>R$ {product.price}</PriceProduct>
                     <ButtonCartCard>

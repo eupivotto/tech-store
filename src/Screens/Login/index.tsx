@@ -1,6 +1,8 @@
 interface AuthContextData {
     authenticated: boolean;
     user: IUserInfo | null;
+    token: string | null;
+    setToken: (token: string | null) => void;
     userLogin: (email: string, password: string) => void;
     userLogout: () => void;
     userAdmin: () =>  boolean;
@@ -9,17 +11,18 @@ interface AuthContextData {
   type  IUserInfo = {
     email: string,
     password: string,
-    isAdmin: boolean
+    isAdmin: boolean,
   } 
  
 
 type ZLoginForm = z.infer <typeof LoginFormSchema>
 
-import {  useContext, useEffect  } from 'react'
+import {  useContext, useEffect, useState  } from 'react'
 import { ButtonPrimary } from '../../components/Buttton'
 import { AuthContext } from '../../contexts/Auth'
 import { useNavigate, Link } from "react-router-dom"
-import { registerNewUser } from '../../services/login.service'
+import { loginNewUser, loginAdmin } from '../../services/login.service'
+
 
 
 
@@ -44,22 +47,28 @@ import {
     FormLogin
    
 } from './styles';
-import { userApiAdmin } from '../../services/api';
+
 
 
 
 export const Login =() => {
 
+  
+
     const { handleSubmit,
          register,
-         formState:{isSubmitting, errors, isValid} 
+         formState:{isSubmitting, errors}
         } = useForm<ZLoginForm>({
+          defaultValues: { isAdmin: true },
         resolver: zodResolver(LoginFormSchema)
     })
     
-
-    const { userLogin, userAdmin } = useContext<AuthContextData>(AuthContext)
     
+    
+
+    const { userLogin, userAdmin, setToken } = useContext<AuthContextData>(AuthContext)
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const [ setResponse ] = useState<any>(null);
     const isAdmin =userAdmin()
     const navigate = useNavigate()
 
@@ -70,45 +79,63 @@ export const Login =() => {
     },[isAdmin, navigate])
   
     const onSubmit = (data: ZLoginForm) => {
-      
-      registerNewUser(data.email, data.password)
-        .then(() => {
-          userLogin(data.email, data.password)
-          if (isValid) {
-            localStorage.setItem('@userInfo', JSON.stringify({ emailUser: data.email }));
-             navigate('/');
-      }
-
-    })
-      .catch((error) => {
-        // Lógica para lidar com erros na chamada da API
-        if (error.response){
-          if (error.response.status === 404) {
-            console.error('Usuário não encontrado')
-          }
-        }
-      });
-
-      console.log('Dados enviados para a API de postagem:', data)
 
       const adminFormValidation = AdminLoginFormSchema.safeParse(data)
       if (!adminFormValidation.success) {
-        console.error ('Dados inválidos para API de Administrdores:', adminFormValidation.error)
+        console.error ('Dados inválidos para API de Administradores:', adminFormValidation.error)
         return
       } 
 
-      userApiAdmin
-      .post('/login', adminFormValidation.data)
-      .then((response) =>{
-        console.log('Resposta da API de administradores:', response.data)
+      // Verifique se o campo isAdmin está sendo capturado corretamente
+      console.log('isAdmin:', adminFormValidation.data.isAdmin)
 
-      })
-
-      .catch((error) =>{
-        console.error('Erro na chamada da API de Administradores:', error)
-      })
+      if (adminFormValidation.data.isAdmin) {
+        loginAdmin(data.email, data.password)
+          .then((response) => {
+            console.log('Resposta da API de administradores:', response.data);
+            const token = response.data.token
+            if (token) {
+              userLogin(data.email, data.password)
+              setToken(token)
+              localStorage.setItem('@userInfo', JSON.stringify({ emailUser: data.email, token }));
+               navigate('/');
+        }
+            console.log('Resposta da API de administradores:', response.data)
+          })
+          .catch((error) => {
+            console.error('Erro na chamada da API de Administradores:', error)
+          })
+      }
       
-      console.log('Dados enviados para a API de postagem')
+      loginNewUser(data.email, data.password)
+        .then((response) => {
+          const token = response.data.token
+          if (token) {
+          userLogin(data.email, data.password)
+          setToken(token)  
+            localStorage.setItem('@userInfo', JSON.stringify({ emailUser: data.email, token }))
+             navigate('/')
+      }
+
+      setResponse(response)
+      
+    })
+    .catch((error) => {
+      // Lógica para lidar com erros na chamada da API
+      if (error.response) {
+        if (error.response.status === 404) {
+          console.error('Usuário não encontrado')
+        }
+      }
+    });
+
+      console.log('Dados enviados para a API de Usuarios', data)
+
+      
+
+     
+      
+     
 }
     return(
         <>
@@ -119,6 +146,11 @@ export const Login =() => {
                 <FormLogin onSubmit={handleSubmit(onSubmit)}>
                  <h1>Faça o Login</h1>
                  <ContainerInputs>
+                  
+                 <input type="hidden" {...register('isAdmin')} value="true" />
+
+
+
                  <label>Email</label>
                  <input
                     placeholder='Digite seu email...' 
@@ -155,3 +187,5 @@ export const Login =() => {
         </>
     )
 }
+
+

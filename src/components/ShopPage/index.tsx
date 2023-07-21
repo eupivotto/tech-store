@@ -1,12 +1,4 @@
-interface IDataProduct {
-    category: string;
-    description: string;
-    id: number;
-    price: number;
-    image: string;
-    title: string;
-    
-    }
+import { IDataProduct } from '../../services/types'
 
 import { Link } from 'react-router-dom'
 import { useState, useEffect } from "react"
@@ -44,7 +36,7 @@ import { ContainerHome,
 export const ShopPage = () => {
 
     //Variavel para link da API
-    const linkGetProducts = 'https://fakestoreapi.com/products'
+    const linkGetProducts = 'https://tech-store-8fff127c84e2.herokuapp.com/product/'
     
     
     //hooks 
@@ -61,7 +53,7 @@ export const ShopPage = () => {
     const pages =  Math.ceil(posts.length / intensPerPage) // usando o Math.ceil para nao deixar numreros quebrados 
     const startIndex = currentPage * intensPerPage
     const endIndex = startIndex + intensPerPage
-    const currentItens = posts.slice (startIndex, endIndex)
+    // const currentItens = posts.slice (startIndex, endIndex)
 
     
 
@@ -131,8 +123,8 @@ export const ShopPage = () => {
                   
                   <div>
                   <Link to={`/product/${product.id}`}>
-                    <TitleProduct>{product.title}</TitleProduct>
-                    <ImageProduct src={product.image} alt={product.title} />
+                    <TitleProduct>{product.name}</TitleProduct>
+                    <ImageProduct src={product.image} alt={product.name} />
                   </Link>
                     <PriceProduct>R$ {product.price}</PriceProduct>
                     <ButtonCartCard>

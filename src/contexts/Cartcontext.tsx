@@ -1,12 +1,12 @@
-import { createContext, useContext, useState, useEffect } from 'react';
-import { IDataProduct } from '../services/types';
+import { createContext, useContext, useState, useEffect, Dispatch, SetStateAction } from 'react'
+import { IDataProduct } from '../services/types'
 
 interface ICartContext {
   cartItems: IDataProduct[];
   addToCart: (item: IDataProduct) => void;
   isCartVisible: boolean;
   toggleCartVisibility: () => void;
-  setCartItems: (items: IDataProduct[]) => void;
+  setCartItems: Dispatch<SetStateAction<IDataProduct[]>>;
 }
 
 interface ICartProviderProps {

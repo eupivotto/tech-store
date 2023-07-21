@@ -14,7 +14,10 @@ export const Pagination = ( {setCurrentPage, pages}: PaginationProps ) => {
         <ContainerPages>
             
             {Array.from(Array(pages), (_item, index) => {
-                return <ButtonPages value={index} onClick={(e: React.MouseEvent<HTMLButtonElement>)=> setCurrentPage(Number(e.currentTarget.value))}>{index + 1}</ButtonPages>
+                return <ButtonPages 
+                key={index}
+                value={index} 
+                onClick={(e: React.MouseEvent<HTMLButtonElement>)=> setCurrentPage(Number(e.currentTarget.value))}>{index + 1}</ButtonPages>
         })}
         </ContainerPages>
     )

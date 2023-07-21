@@ -35,9 +35,11 @@ export const ContainerProduct = styled.div`
 
 export const TitleProduct = styled.p`
    
+    height:100px;
     font-size:40px;
     color: #fff;
     margin-bottom:10px;
+    
 
 
 `
@@ -47,10 +49,11 @@ export const DescriptionProduct = styled.p`
     font-size:14px;
     color: #fff;
     margin-bottom:10px;
+    
 
 
 `
-export const CategoryProduct = styled.p`
+export const BrandProduct = styled.p`
    
    
     font-size:14px;

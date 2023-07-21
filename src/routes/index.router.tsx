@@ -5,9 +5,14 @@ import { Contact } from '../Screens/Contact'
 import { SingleProduct } from '../Screens/SingleProduct'
 import { Signup } from '../Screens/Signup'
 import { Cart } from '../Screens/Cart'
+import { AdminPanel } from '../Screens/Admin'
+import { Success } from '../Screens/Success'
+import { Teste } from '../Screens/Teste'
+
 
 import { AuthProvider } from '../contexts/Auth'
 import { CartProvider } from '../contexts/Cartcontext'
+
 
 
 
@@ -27,6 +32,9 @@ export default function Router () {
         <Route path='/login' element={<Login />} />
         <Route path='/signup' element={<Signup />} />
         <Route path='/cart' element={<Cart />} />
+        <Route path='/admin' element={<AdminPanel />} />
+        <Route path='/success' element={<Success />} />
+        <Route path='/teste' element={<Teste />} />
         
         
 

@@ -23,9 +23,10 @@ import { ContainerCartItems,
 
 export const CartItems: React.FC<ICartItemProps> = ({ data }) => {
 
-    const {id, image, title, price} = data
+    const {id, image, name, price} = data
 
     const { cartItems, setCartItems } = useContext(CartContext)
+    
     const handleRemoveItem = () =>{
 
      const updateCartItems = cartItems.filter((item) => item.id != id)
@@ -43,7 +44,7 @@ export const CartItems: React.FC<ICartItemProps> = ({ data }) => {
             
             <CartInfo> 
 
-                <h3> {title} </h3>
+                <h3> {name} </h3>
                 <h2> {price} </h2>
                 <button type="button" onClick={handleRemoveItem}>
                 <Trash size={20} color="#ffffff" />
