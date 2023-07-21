@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { AuthContext, AuthContextData } from '../../contexts/Auth';
 import { NavBar } from '../../components/Navbar';
 import { Footer } from '../../components/Footer';
-import { adminpanelproductapi } from '../../services/api';
+import { adminpanelproductapi, adminpanelusersapi } from '../../services/api';
 import {
   ContainerHome,
   ContainerFormLogin,
@@ -27,21 +27,30 @@ type Product = {
   brand: string;
 };
 
-// ...imports
+type User = {
+  id: number;
+  name: string;
+  email: string;
+  contato: string;
+};
 
 export const AdministrativePanel = () => {
-  // ...rest of the code
+  const { userAdminPanel } = useContext<AuthContextData>(AuthContext);
+  const navigate = useNavigate();
 
   const [products, setProducts] = useState<Product[]>([]);
-  const [showProductItems, setShowProductItems] = useState(false);
+  const [users, setUsers] = useState<User[]>([]);
+  const [showProducts, setShowProducts] = useState(true);
+  const [showUsers, setShowUsers] = useState(false);
 
   useEffect(() => {
-    const cachedValues = localStorage.getItem('@adminPanelValues');
-    if (cachedValues) {
-      const { name } = JSON.parse(cachedValues);
-      setName(name);
-    }
+    handleReset();
   }, []);
+
+  const handleReset = () => {
+    setShowProducts(false);
+    setShowUsers(false);
+  };
 
   const loadProducts = async () => {
     try {
@@ -59,8 +68,31 @@ export const AdministrativePanel = () => {
   };
 
   useEffect(() => {
-    loadProducts();
-  }, []);
+    if (showProducts) {
+      loadProducts();
+    }
+  }, [showProducts]);
+
+  const loadUsers = async () => {
+    try {
+      const response = await adminpanelusersapi.get('/');
+      const usersData: User[] = response.data.map((user: any) => ({
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        contato: user.contato,
+      }));
+      setUsers(usersData);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    if (showUsers) {
+      loadUsers();
+    }
+  }, [showUsers]);
 
   const handleDeleteProduct = async (productId: number) => {
     try {
@@ -71,9 +103,23 @@ export const AdministrativePanel = () => {
     }
   };
 
+  const handleDeleteUser = async (userId: number) => {
+    try {
+      await adminpanelusersapi.delete(`delete/${userId}`);
+      setUsers((prevUsers) => prevUsers.filter((user) => user.id !== userId));
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const handleProductClick = () => {
-    loadProducts();
-    setShowProductItems(!showProductItems);
+    setShowProducts(true);
+    setShowUsers(false);
+  };
+
+  const handleUserClick = () => {
+    setShowProducts(false);
+    setShowUsers(true);
   };
 
   return (
@@ -87,33 +133,58 @@ export const AdministrativePanel = () => {
 
             <ContainerButtons>
               <button type="button" onClick={handleProductClick}>Produto</button>
-              <button type="button">Usuário</button>
+              <button type="button" onClick={handleUserClick}>Usuário</button>
               <button type="button">Pedidos</button>
               <button type="button">Adicionar Novo</button>
             </ContainerButtons>
 
-            <ProductContainer>
-              <ProductHeader>
-                <p style={{ flexBasis: '25%' }}>Nome</p>
-                <p style={{ flexBasis: '25%' }}>Preço</p>
-                <p style={{ flexBasis: '25%' }}>Marca</p>
-                <p style={{ flexBasis: '25%' }}>Ações</p>
-              </ProductHeader>
+            {showProducts && (
+              <ProductContainer>
+                <ProductHeader>
+                  <p style={{ flexBasis: '25%' }}>Nome</p>
+                  <p style={{ flexBasis: '25%' }}>Preço</p>
+                  <p style={{ flexBasis: '25%' }}>Marca</p>
+                  <p style={{ flexBasis: '25%' }}>Ações</p>
+                </ProductHeader>
+                {products.map((product) => (
+                  <ProductItem key={product.id}>
+                    <ProductInfo>
+                      <p style={{ flexBasis: '25%' }}>{product.name}</p>
+                      <p style={{ flexBasis: '25%' }}>{product.price}</p>
+                      <p style={{ flexBasis: '25%' }}>{product.brand}</p>
+                    </ProductInfo>
+                    <ProductActions>
+                      <EditButton type="button">Editar</EditButton>
+                      <DeleteButton type="button" onClick={() => handleDeleteProduct(product.id)}>Excluir</DeleteButton>
+                    </ProductActions>
+                  </ProductItem>
+                ))}
+              </ProductContainer>
+            )}
 
-              {showProductItems && products.map((product) => (
-                <ProductItem key={product.id}>
-                  <ProductInfo>
-                    <p style={{ flexBasis: '25%' }}>{product.name}</p>
-                    <p style={{ flexBasis: '25%' }}>{product.price}</p>
-                    <p style={{ flexBasis: '25%' }}>{product.brand}</p>
-                  </ProductInfo>
-                  <ProductActions>
-                    <EditButton type="button">Editar</EditButton>
-                    <DeleteButton type="button" onClick={() => handleDeleteProduct(product.id)}>Excluir</DeleteButton>
-                  </ProductActions>
-                </ProductItem>
-              ))}
-            </ProductContainer>
+            {showUsers && (
+              <ProductContainer>
+                <ProductHeader>
+                  <p style={{ flexBasis: '33.33%' }}>Nome</p>
+                  <p style={{ flexBasis: '33.33%' }}>E-mail</p>
+                  <p style={{ flexBasis: '33.33%' }}>Contato</p>
+                  <p style={{ flexBasis: '33.33%' }}>Ações</p>
+                </ProductHeader>
+                {users.map((user) => (
+                  <ProductItem key={user.id}>
+                    <ProductInfo>
+                      <p style={{ flexBasis: '33.33%' }}>{user.name}</p>
+                      <p style={{ flexBasis: '33.33%' }}>{user.email}</p>
+                      <p style={{ flexBasis: '33.33%' }}>{user.contato}</p>
+                    </ProductInfo>
+                    <ProductActions>
+                      <EditButton type="button">Editar</EditButton>
+                      <DeleteButton type="button" onClick={() => handleDeleteUser(user.id)}>Excluir</DeleteButton>
+                    </ProductActions>
+                  </ProductItem>
+                ))}
+              </ProductContainer>
+            )}
           </ContainerFormLogin>
         </ContainerHomeform>
       </ContainerHome>
@@ -121,3 +192,4 @@ export const AdministrativePanel = () => {
     </>
   );
 };
+
