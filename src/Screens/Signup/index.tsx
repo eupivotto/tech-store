@@ -1,42 +1,17 @@
-interface AuthContextData {
-  authenticated: boolean;
-  user: IUserSignup | null,
-  userLogin: (email: string, password: string) => void,
-  userSignup:(
-    email:string,
-    name:string,
-    telephone:string,
-    road:string,
-    Adress:string,
-    Zipcode:string,
-    password:string)=> void
-  userLogout: () => void
-}
-
-type IUserSignup = {
-  name: string;
-  road: string;
-  Adress: string;
-  Zipcode: string;
-  password: string;
-  contato: string;
-  email: string;
-};
-
+// Importando os hooks e componentes necessários
 import { useEffect, useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { AuthContext } from '../../contexts/Auth';
-import { NavBar } from '../../components/Navbar';
-import { Footer } from '../../components/Footer';
-import { ButtonPrimary } from '../../components/Buttton';
-import { useForm } from 'react-hook-form';
-import { LoginFormSchema } from './schema';
-import { zodResolver } from '@hookform/resolvers/zod';
-import * as z from 'zod';
-import { resgisterSignup } from '../../services/login.service';
+import { AuthContext } from '../../contexts/Auth'; // Importando o contexto de autenticação
+import { NavBar } from '../../components/Navbar'; // Importando o componente da barra de navegação
+import { Footer } from '../../components/Footer'; // Importando o componente do rodapé
+import { ButtonPrimary } from '../../components/Buttton'; // Importando o componente do botão primário
+import { useForm } from 'react-hook-form'; // Importando o hook do formulário
+import { LoginFormSchema } from './schema'; // Importando o schema de validação do formulário
+import { zodResolver } from '@hookform/resolvers/zod'; // Importando o resolver do Zod para o react-hook-form
+import * as z from 'zod'; // Importando a biblioteca Zod para validação de esquemas
+import { resgisterSignup } from '../../services/login.service'; // Importando o serviço de cadastro de usuário
 
-
-/* import {NewModal} from '../../components/NewModal' */
+// Importando os estilos do componente
 import {
   ContainerHome,
   ContainerFormLogin,
@@ -47,17 +22,18 @@ import {
   FormLogin,
 } from './styles';
 
-
+// Definindo o tipo para os dados do formulário
 type ZLoginForm = z.infer<typeof LoginFormSchema>;
 
-  // Contexto e Navegação
-
+// Componente de cadastro de usuário
 export const Signup = () => {
-  const { userSignup } = useContext <AuthContextData>(AuthContext);
+  // Obtendo as funções do contexto de autenticação
+  const { userSignup } = useContext<AuthContextData>(AuthContext);
+
+  // Hook de navegação
   const navigate = useNavigate();
 
-// Variáveis de estado
-
+  // Variáveis de estado para armazenar os dados do formulário
   const [name, setName] = useState('');
   const [contato, setContato] = useState('');
   const [email, setEmail] = useState('');
@@ -67,8 +43,7 @@ export const Signup = () => {
   const [password, setPassword] = useState('');
   const [cadastroSucesso, setCadastroSucesso] = useState(false);
 
-  // Validação do formulário
-
+  // Validação e gerenciamento do formulário usando o hook do react-hook-form
   const {
     register,
     handleSubmit,
@@ -77,31 +52,27 @@ export const Signup = () => {
     resolver: zodResolver(LoginFormSchema),
   });
 
-   // Envio do formulário
-
+  // Função para realizar o cadastro do usuário
   const submitCadastro = async (data: ZLoginForm) => {
-    userSignup(data);
-try {
-  await resgisterSignup(data);
-  
-  userSignup(data)
+    userSignup(data); // Chama a função de cadastro do usuário do contexto de autenticação
 
-  if (isValid) {
-    localStorage.setItem('@userInfo', JSON.stringify({ data }));
-    navigate('/');
-    handleSalvarClick(); // Limpar os valores após salvar
-    setCadastroSucesso(true); // Exibir mensagem de sucesso
-  }
-} catch (error) {
-  
-  console.error(error);
-}
-   
+    try {
+      await resgisterSignup(data); // Chama o serviço de cadastro de usuário com os dados do formulário
+
+      userSignup(data); // Chama novamente a função de cadastro do usuário do contexto de autenticação
+
+      if (isValid) {
+        localStorage.setItem('@userInfo', JSON.stringify({ data })); // Armazena os dados do usuário em cache após o cadastro
+        navigate('/'); // Redireciona para a página principal após o cadastro
+        handleSalvarClick(); // Limpa os valores do formulário após salvar
+        setCadastroSucesso(true); // Exibe a mensagem de sucesso de cadastro
+      }
+    } catch (error) {
+      console.error(error); // Exibe um erro caso ocorra algum problema no cadastro
+    }
   };
 
-  
-   // Carregar valores armazenados em cache ao carregar a página
-
+  // Carrega os valores armazenados em cache ao carregar a página
   useEffect(() => {
     const cachedValues = localStorage.getItem('@signupValues');
     if (cachedValues) {
@@ -116,8 +87,7 @@ try {
     }
   }, []);
 
-    // Limpar valores do formulário
-
+  // Limpa os valores do formulário
   const handleSalvarClick = () => {
     setName('');
     setContato('');
@@ -128,21 +98,21 @@ try {
     setPassword('');
   };
 
-    // formulario TSX
-    
+  // Renderização do formulário
   return (
     <>
-      <NavBar />
+      <NavBar /> {/* Renderiza o componente da barra de navegação */}
       <ContainerHome>
         <ContainerHomeform>
           <ContainerFormLogin>
-            {cadastroSucesso ? (
+            {cadastroSucesso ? ( // Verifica se o cadastro foi realizado com sucesso para exibir a mensagem
               <h2>Usuário cadastrado com sucesso!</h2>
             ) : (
               <>
                 <FormLogin onSubmit={handleSubmit(submitCadastro)}>
                   <h1>Cadastro de Usuário</h1>
 
+                  {/* Campos do formulário */}
                   <ContainerInputs>
                     <label>Nome</label>
                     <input
@@ -224,15 +194,9 @@ try {
         </ContainerHomeform>
       </ContainerHome>
 
-{/*       <NewModal isOpen={true} contentLabelText='modal new Sales' onRequestClose={() => {}} titleModal='Cadastrar Usuário' handleSubmitFormModal={() => console.log('teste')}>
-                   
-                
-</NewModal>
- */}
-     
+      {/* Renderiza o componente do rodapé */}
       <Footer />
-
     </>
-     
   );
 };
+

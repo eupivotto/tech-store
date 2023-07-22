@@ -5,6 +5,7 @@ import { Shop } from '../Screens/Shop'
 import { Contact } from '../Screens/Contact'
 import {Signup} from '../Screens/Signup'
 import {AdministrativePanel} from '../Screens/AdministrativePanel'
+import {CustomerPage} from '../Screens/CustomerPage'
 
 import { AuthProvider } from '../contexts/Auth'
 
@@ -21,6 +22,7 @@ export default function Router () {
         <Route path='/login' element={<Login />} />
         <Route path='/signup' element={<Signup />} />
         <Route path='/administrativepanel' element={<AdministrativePanel />} />
+        <Route path='/customerpage' element={<CustomerPage />} />
         </Routes>
 
         </AuthProvider>

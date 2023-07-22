@@ -1,11 +1,13 @@
+// Importando os módulos e componentes necessários
 import { useEffect, useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { AuthContext, AuthContextData } from '../../contexts/Auth';
-import { NavBar } from '../../components/Navbar';
-import { Footer } from '../../components/Footer';
-import { adminpanelproductapi, adminpanelusersapi, adminpanelpedidoapi, adminpanelcrateprodutoapi } from '../../services/api';
-import Modal from 'react-modal';
+import { AuthContext, AuthContextData } from '../../contexts/Auth'; // Importando o contexto de autenticação
+import { NavBar } from '../../components/Navbar'; // Importando o componente de barra de navegação
+import { Footer } from '../../components/Footer'; // Importando o componente do rodapé
+import { adminpanelproductapi, adminpanelusersapi, adminpanelpedidoapi, adminpanelcrateprodutoapi } from '../../services/api'; // Importando as APIs para ações no painel administrativo
+import Modal from 'react-modal'; // Importando o componente do modal
 
+// Importando os estilos do componente
 import {
   ContainerHome,
   ContainerFormLogin,
@@ -23,6 +25,7 @@ import {
   customModalStyles, // Importando a estilização do modal
 } from './style';
 
+// Definindo os tipos de dados utilizados no componente
 type Product = {
   id: number;
   name: string;
@@ -46,10 +49,12 @@ type Order = {
   amount: string;
 };
 
+// Definindo o componente do Painel Administrativo
 export const AdministrativePanel = () => {
-  const { userAdminPanel } = useContext<AuthContextData>(AuthContext);
-  const navigate = useNavigate();
+  const { userAdminPanel } = useContext<AuthContextData>(AuthContext); // Obtendo os dados do usuário administrador do contexto
+  const navigate = useNavigate(); // Utilizando a função de navegação
 
+  // Definindo os estados do componente
   const [products, setProducts] = useState<Product[]>([]);
   const [users, setUsers] = useState<User[]>([]);
   const [orders, setOrders] = useState<Order[]>([]);
@@ -57,10 +62,12 @@ export const AdministrativePanel = () => {
   const [showUsers, setShowUsers] = useState(false);
   const [showOrders, setShowOrders] = useState(false);
 
+  // Efeito para executar a função de reinicialização ao montar o componente
   useEffect(() => {
     handleReset();
   }, []);
 
+  // Definindo os estados e funções para controle do modal de adição de produtos
   const [showModal, setShowModal] = useState(false);
   const [newProduct, setNewProduct] = useState<Product>({
     id: 0,
@@ -72,10 +79,12 @@ export const AdministrativePanel = () => {
     image: '',
   });
 
+  // Função para abrir o modal
   const handleOpenModal = () => {
     setShowModal(true);
   };
 
+  // Função para fechar o modal e limpar o estado do novo produto
   const handleCloseModal = () => {
     setShowModal(false);
     setNewProduct({
@@ -89,6 +98,7 @@ export const AdministrativePanel = () => {
     });
   };
 
+  // Função para atualizar o estado do novo produto de acordo com os campos do formulário
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setNewProduct((prevProduct) => ({
@@ -97,12 +107,14 @@ export const AdministrativePanel = () => {
     }));
   };
 
+  // Função para redefinir a visualização de produtos, usuários e pedidos
   const handleReset = () => {
     setShowProducts(false);
     setShowUsers(false);
     setShowOrders(false);
   };
 
+  // Função para carregar os produtos da API
   const loadProducts = async () => {
     try {
       const response = await adminpanelproductapi.get('/');
@@ -121,12 +133,14 @@ export const AdministrativePanel = () => {
     }
   };
 
+  // Efeito para carregar os produtos ao mostrar a visualização de produtos
   useEffect(() => {
     if (showProducts) {
       loadProducts();
     }
   }, [showProducts]);
 
+  // Função para carregar os usuários da API
   const loadUsers = async () => {
     try {
       const response = await adminpanelusersapi.get('/');
@@ -142,12 +156,14 @@ export const AdministrativePanel = () => {
     }
   };
 
+  // Efeito para carregar os usuários ao mostrar a visualização de usuários
   useEffect(() => {
     if (showUsers) {
       loadUsers();
     }
   }, [showUsers]);
 
+  // Função para carregar os pedidos da API
   const loadOrders = async () => {
     try {
       const response = await adminpanelpedidoapi.get('/');
@@ -162,12 +178,14 @@ export const AdministrativePanel = () => {
     }
   };
 
+  // Efeito para carregar os pedidos ao mostrar a visualização de pedidos
   useEffect(() => {
     if (showOrders) {
       loadOrders();
     }
   }, [showOrders]);
 
+  // Função para excluir um produto
   const handleDeleteProduct = async (productId: number) => {
     try {
       await adminpanelproductapi.delete(`delete/${productId}`);
@@ -177,6 +195,7 @@ export const AdministrativePanel = () => {
     }
   };
 
+  // Função para excluir um usuário
   const handleDeleteUser = async (userId: number) => {
     try {
       await adminpanelusersapi.delete(`delete/${userId}`);
@@ -186,6 +205,7 @@ export const AdministrativePanel = () => {
     }
   };
 
+  // Função para excluir um pedido
   const handleDeleteOrder = async (orderId: number) => {
     try {
       await adminpanelpedidoapi.delete(`delete/${orderId}`);
@@ -195,6 +215,7 @@ export const AdministrativePanel = () => {
     }
   };
 
+  // Função para criar um novo produto
   const handleCreateProduct = async () => {
     try {
       await adminpanelcrateprodutoapi.post('/', newProduct);
@@ -206,6 +227,7 @@ export const AdministrativePanel = () => {
     }
   };
 
+  // Função para editar um produto
   const handleEditProduct = async (productId: number, updatedProduct: Partial<Product>) => {
     try {
       await adminpanelproductapi.put(`update/${productId}`, updatedProduct);
@@ -217,6 +239,7 @@ export const AdministrativePanel = () => {
     }
   };
 
+  // Função para editar um usuário
   const handleEditUser = async (userId: number, updatedUser: Partial<User>) => {
     try {
       await adminpanelusersapi.put(`update/${userId}`, updatedUser);
@@ -228,6 +251,7 @@ export const AdministrativePanel = () => {
     }
   };
 
+  // Função para editar um pedido
   const handleEditOrder = async (orderId: number, updatedOrder: Partial<Order>) => {
     try {
       await adminpanelpedidoapi.put(`update/${orderId}`, updatedOrder);
@@ -239,6 +263,7 @@ export const AdministrativePanel = () => {
     }
   };
 
+  // Funções para alterar a visualização de produtos, usuários e pedidos
   const handleProductClick = () => {
     setShowProducts(true);
     setShowUsers(false);

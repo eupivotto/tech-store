@@ -28,6 +28,7 @@ interface AuthContextData {
     Zipcode:string,
     password:string)=> void,
     userAdminPanel: (name: string) => void,
+    userCustomerPage: (name: string) => void,
   userLogout: () => void
 }
 
@@ -46,6 +47,8 @@ export const AuthContext = createContext<AuthContextData>({
   userSignup: () => {},
   
   userAdminPanel: () => {},
+
+  userCustomerPage: () => {},
 });
 
 export const AuthProvider = ({ children }:{children:ReactNode}) => {
@@ -72,11 +75,15 @@ export const AuthProvider = ({ children }:{children:ReactNode}) => {
     console.log('Logout');
   };
 
+  const userCustomerPage = (userData: IUserSignup) => {
+    console.log('CustomerPage auth', userData);
+    setUser(userData);
+  };
   const authenticated = !!user;
 
   return (
     <AuthContext.Provider
-      value={{ authenticated, user, userLogin, userLogout, userSignup,userAdminPanel }}
+      value={{ authenticated, user, userLogin, userLogout, userSignup,userAdminPanel,userCustomerPage }}
     >
       {children}
     </AuthContext.Provider>

@@ -28,6 +28,18 @@ export const adminpanelpedidoapi = axios.create({
 export const adminpanelapi = axios.create({
   baseURL: 'https://tech-store-8fff127c84e2.herokuapp.com/adminpanel'
 });
+export const CustomerPageclientapi = axios.create({
+  baseURL: 'https://tech-store-8fff127c84e2.herokuapp.com/users/'
+});
+
+export const CustomerPagepageeditapi = axios.create({
+  baseURL: 'https://tech-store-8fff127c84e2.herokuapp.com/user/update/:id'
+});
+
+
+export const CustomerPagepageorderapi = axios.create({
+  baseURL: 'https://tech-store-8fff127c84e2.herokuapp.com/sales/'
+});
 
 
 
