@@ -3,7 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import { AuthContext, AuthContextData } from '../../contexts/Auth';
 import { NavBar } from '../../components/Navbar';
 import { Footer } from '../../components/Footer';
-import { adminpanelproductapi, adminpanelusersapi, adminpanelpedidoapi } from '../../services/api';
+import { adminpanelproductapi, adminpanelusersapi, adminpanelpedidoapi, adminpanelcrateprodutoapi } from '../../services/api';
+import Modal from 'react-modal';
+
 import {
   ContainerHome,
   ContainerFormLogin,
@@ -16,8 +18,9 @@ import {
   ProductItem,
   ProductInfo,
   ProductActions,
-  DeleteButton,
   EditButton,
+  DeleteButton,
+  customModalStyles, // Importando a estilização do modal
 } from './style';
 
 type Product = {
@@ -25,6 +28,9 @@ type Product = {
   name: string;
   price: number;
   brand: string;
+  model: string;
+  description: string;
+  image: string;
 };
 
 type User = {
@@ -55,6 +61,42 @@ export const AdministrativePanel = () => {
     handleReset();
   }, []);
 
+  const [showModal, setShowModal] = useState(false);
+  const [newProduct, setNewProduct] = useState<Product>({
+    id: 0,
+    name: '',
+    price: 0,
+    brand: '',
+    model: '',
+    description: '',
+    image: '',
+  });
+
+  const handleOpenModal = () => {
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+    setNewProduct({
+      id: 0,
+      name: '',
+      price: 0,
+      brand: '',
+      model: '',
+      description: '',
+      image: '',
+    });
+  };
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    setNewProduct((prevProduct) => ({
+      ...prevProduct,
+      [name]: name === 'price' ? parseFloat(value) : value,
+    }));
+  };
+
   const handleReset = () => {
     setShowProducts(false);
     setShowUsers(false);
@@ -69,6 +111,9 @@ export const AdministrativePanel = () => {
         name: product.name,
         price: product.price,
         brand: product.brand,
+        model: product.model,
+        description: product.description,
+        image: product.image,
       }));
       setProducts(productsData);
     } catch (error) {
@@ -150,6 +195,17 @@ export const AdministrativePanel = () => {
     }
   };
 
+  const handleCreateProduct = async () => {
+    try {
+      await adminpanelcrateprodutoapi.post('/', newProduct);
+      // Recarregar os produtos para atualizar a lista na tela
+      loadProducts();
+      handleCloseModal();
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const handleEditProduct = async (productId: number, updatedProduct: Partial<Product>) => {
     try {
       await adminpanelproductapi.put(`update/${productId}`, updatedProduct);
@@ -214,7 +270,7 @@ export const AdministrativePanel = () => {
               <button type="button" onClick={handleProductClick}>Produto</button>
               <button type="button" onClick={handleUserClick}>Usuário</button>
               <button type="button" onClick={handleOrderClick}>Pedidos</button>
-              <button type="button">Adicionar Novo</button>
+              <button type="button" onClick={handleOpenModal}>Adicionar Novo</button>
             </ContainerButtons>
 
             {showProducts && (
@@ -239,6 +295,9 @@ export const AdministrativePanel = () => {
                           name: 'Novo nome',
                           price: 99.99,
                           brand: 'Nova marca',
+                          model: 'Novo modelo',
+                          description: 'Nova descrição',
+                          image: 'Nova imagem',
                         })}
                       >
                         Editar
@@ -316,6 +375,43 @@ export const AdministrativePanel = () => {
         </ContainerHomeform>
       </ContainerHome>
       <Footer />
+      {/* Modal para adicionar novo produto */}
+      <Modal
+        isOpen={showModal}
+        onRequestClose={handleCloseModal}
+        style={customModalStyles} // Estilo do modal
+        contentLabel="Adicionar Novo Produto"
+      >
+        <h2>Adicionar Novo Produto</h2>
+        <form>
+          <div>
+            <label>Nome:</label>
+            <input type="text" name="name" value={newProduct.name} onChange={handleInputChange} />
+          </div>
+          <div>
+            <label>Preço:</label>
+            <input type="number" step="0.01" name="price" value={newProduct.price} onChange={handleInputChange} />
+          </div>
+          <div>
+            <label>Marca:</label>
+            <input type="text" name="brand" value={newProduct.brand} onChange={handleInputChange} />
+          </div>
+          <div>
+            <label>Modelo:</label>
+            <input type="text" name="model" value={newProduct.model} onChange={handleInputChange} />
+          </div>
+          <div>
+            <label>Descrição:</label>
+            <input type="text" name="description" value={newProduct.description} onChange={handleInputChange} />
+          </div>
+          <div>
+            <label>Imagem:</label>
+            <input type="text" name="image" value={newProduct.image} onChange={handleInputChange} />
+          </div>
+        </form>
+        <button type="button" onClick={handleCreateProduct}>Adicionar</button>
+        <button type="button" onClick={handleCloseModal}>Cancelar</button>
+      </Modal>
     </>
   );
 };

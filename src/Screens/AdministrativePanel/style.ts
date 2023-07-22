@@ -11,8 +11,7 @@ export const ContainerHome = styled.div`
   background-image: url(${BgBody});
 `;
 
-export const ContainerHomeform = styled.div`
- 
+export const ContainerHomeform = styled.div` 
   border: 1px solid;
   width: 90%;
   max-width: 1150px;
@@ -65,16 +64,14 @@ export const ProductContainer = styled.ul`
   margin: 0;
   width: 100%;
   max-width: 1100px;
- 
 `;
 
 export const ProductHeader = styled.div`
- display: flex;
+  display: flex;
   align-items: center;
   justify-content: space-around;
   width: 100%;
   padding: 10px 0;
-  
   text-align: center;
   font-weight: 700;
   margin-left: 50px; /* Adiciona margem esquerda para afastar os itens do cabeçalho */
@@ -150,3 +147,25 @@ export const ContainerSubTitulo = styled.p`
   color: #fff;
   margin-bottom: 40px;
 `;
+
+// Estilização do Modal
+export const customModalStyles = {
+  overlay: {
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+
+  },
+  content: {
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight: '-50%',
+    transform: 'translate(-50%, -50%)',
+    border: 'none',
+    borderRadius: '10px',
+    boxShadow: '0px 0px 28px 0px rgba(0,0,0,0.38)',
+    padding: '30px',
+    maxWidth: '400px',
+    width: '100%',
+  },
+};
