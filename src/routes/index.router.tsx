@@ -7,7 +7,7 @@ import { Signup } from '../Screens/Signup'
 import { Cart } from '../Screens/Cart'
 import { AdminPanel } from '../Screens/Admin'
 import { Success } from '../Screens/Success'
-import { Teste } from '../Screens/Teste'
+
 
 
 import { AuthProvider } from '../contexts/Auth'
@@ -34,7 +34,7 @@ export default function Router () {
         <Route path='/cart' element={<Cart />} />
         <Route path='/admin' element={<AdminPanel />} />
         <Route path='/success' element={<Success />} />
-        <Route path='/teste' element={<Teste />} />
+        
         
         
 

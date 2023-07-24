@@ -1,18 +1,7 @@
-interface AuthContextData {
-  authenticated: boolean;
-  user: IUserInfo | null;
-  token: string | null;
-  setToken: (token: string | null) => void;
-  userLogin: (email: string, password: string) => void;
-  userLogout: () => void;
-  userAdmin: () =>  boolean;
-}
+import { AuthContextData } from "../services/types";
+import { IUserSignup } from '../services/types'
+import { IUserInfo } from '../services/types'
 
-type  IUserInfo = {
-  email: string,
-  password: string,
-  isAdmin: boolean
-} 
   
 import  { ReactNode, createContext, useState  } from "react"
 import { useNavigate } from "react-router-dom"
@@ -30,6 +19,8 @@ export const AuthContext = createContext<AuthContextData>({
     userLogout: () => {},
     // eslint-disable-next-line @typescript-eslint/no-empty-function
     userAdmin: () => false,
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    userSignup: () => {},
   });
 
 export const AuthProvider = ({ children }:{ children: ReactNode }) => {
@@ -37,6 +28,7 @@ export const AuthProvider = ({ children }:{ children: ReactNode }) => {
     const navigate = useNavigate() 
     const [ user, setUser] = useState<IUserInfo | null >(null) // userState com usuario iniciando nulo
     const [token, setToken] = useState<string | null>(null)
+    const [, setUsersignup] = useState<IUserSignup | null>(null)
     
 
     const userLogin = (email: string, password: string) => {
@@ -44,11 +36,21 @@ export const AuthProvider = ({ children }:{ children: ReactNode }) => {
         const tokenFromAPI = 'TOKEN_FROM_API'
         setUser({password, email, isAdmin: true})
         setToken(tokenFromAPI)
+
+        if (!user) {
+         
+          navigate("/login")
+        }
         
     }
 
     const userAdmin = () => {
       return !!user?.isAdmin;
+    }
+
+    const userSignup = (userData: IUserSignup) => {
+      console.log('Signup auth', userData);
+      setUsersignup(userData);
     }
 
     const userLogout = () => {
@@ -70,6 +72,7 @@ export const AuthProvider = ({ children }:{ children: ReactNode }) => {
                   token,
                   setToken: updateToken,
                   userLogin,
+                  userSignup,
                   userLogout,
                   userAdmin }}>
          {children}   

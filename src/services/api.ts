@@ -24,3 +24,6 @@ export const categoryApi = axios.create({
     baseURL: 'https://fakestoreapi.com/products/categories'
 })
 
+export const signupapi = axios.create({
+    baseURL: 'https://tech-store-8fff127c84e2.herokuapp.com/users/create'
+  });

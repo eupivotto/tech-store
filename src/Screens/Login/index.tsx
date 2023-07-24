@@ -1,18 +1,10 @@
-interface AuthContextData {
-    authenticated: boolean;
-    user: IUserInfo | null;
-    token: string | null;
-    setToken: (token: string | null) => void;
-    userLogin: (email: string, password: string) => void;
-    userLogout: () => void;
-    userAdmin: () =>  boolean;
-  }
+import { AuthContextData } from '../../services/types'
 
-  type  IUserInfo = {
-    email: string,
-    password: string,
-    isAdmin: boolean,
-  } 
+  // type  IUserInfo = {
+  //   email: string,
+  //   password: string,
+  //   isAdmin: boolean,
+  // } 
  
 
 type ZLoginForm = z.infer <typeof LoginFormSchema>
@@ -66,46 +58,49 @@ export const Login =() => {
     
     
 
-    const { userLogin, userAdmin, setToken } = useContext<AuthContextData>(AuthContext)
+    const { userLogin, userAdmin, setToken, authenticated } = useContext<AuthContextData>(AuthContext)
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const [ setResponse ] = useState<any>(null);
     const isAdmin =userAdmin()
     const navigate = useNavigate()
 
     useEffect(() => {
-      if (isAdmin) {
+      if (authenticated) {
         navigate('/')
       }
-    },[isAdmin, navigate])
+    },[authenticated, navigate])
   
     const onSubmit = (data: ZLoginForm) => {
 
       const adminFormValidation = AdminLoginFormSchema.safeParse(data)
+      
       if (!adminFormValidation.success) {
         console.error ('Dados inválidos para API de Administradores:', adminFormValidation.error)
         return
       } 
 
-      // Verifique se o campo isAdmin está sendo capturado corretamente
-      console.log('isAdmin:', adminFormValidation.data.isAdmin)
 
       if (adminFormValidation.data.isAdmin) {
         loginAdmin(data.email, data.password)
           .then((response) => {
+            if (response.data && response.data.admin && response.data.admin.isAdmin) {
             console.log('Resposta da API de administradores:', response.data);
-            const token = response.data.token
+            const {token} = response.data
             if (token) {
               userLogin(data.email, data.password)
               setToken(token)
               localStorage.setItem('@userInfo', JSON.stringify({ emailUser: data.email, token }));
+              console.log('Redirecionando para a página principal')
                navigate('/');
-        }
-            console.log('Resposta da API de administradores:', response.data)
+        } else {
+          console.error('Token não encontrado na resposta da API de administradores');
+        } 
+      }
           })
           .catch((error) => {
             console.error('Erro na chamada da API de Administradores:', error)
           })
-      }
+      } else {
       
       loginNewUser(data.email, data.password)
         .then((response) => {
@@ -128,7 +123,7 @@ export const Login =() => {
         }
       }
     });
-
+  }
       console.log('Dados enviados para a API de Usuarios', data)
 
       
