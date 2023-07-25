@@ -25,6 +25,8 @@ export const AuthContext = createContext<AuthContextData>({
     userAdmin: () => false,
     // eslint-disable-next-line @typescript-eslint/no-empty-function
     userSignup: () => {},
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    userAdminPanel: () => {},
   });
 
 export const AuthProvider = ({ children }:{ children: ReactNode }) => {
@@ -97,6 +99,11 @@ export const AuthProvider = ({ children }:{ children: ReactNode }) => {
         navigate('/login')
     }
 
+    const userAdminPanel = (userData: IUserSignup) => {
+      console.log('AdminPanel auth', userData);
+      setUser(userData);
+    };
+
     const updateToken = (newToken: string | null) => {
       setToken(newToken);
     };
@@ -112,6 +119,7 @@ export const AuthProvider = ({ children }:{ children: ReactNode }) => {
                   userLogin,
                   userSignup,
                   userLogout,
+                  userAdminPanel,
                   userAdmin }}>
          {children}   
         </AuthContext.Provider>

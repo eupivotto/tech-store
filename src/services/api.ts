@@ -20,9 +20,25 @@ export const userApiAdmin = axios.create({
 });
 
 export const categoryApi = axios.create({
-  baseURL: 'https://fakestoreapi.com/products/categories',
+  baseURL: '',
 });
 
 export const signupapi = axios.create({
   baseURL: `${BASE_URL}/users/create`,
+});
+
+export const adminpanelcrateprodutoapi = axios.create({
+  baseURL: 'https://tech-store-8fff127c84e2.herokuapp.com/product/created'
+});
+
+export const adminpanelproductapi = axios.create({
+  baseURL: 'https://tech-store-8fff127c84e2.herokuapp.com/product/'
+});
+
+export const adminpanelusersapi = axios.create({
+  baseURL: 'https://tech-store-8fff127c84e2.herokuapp.com/users/'
+});
+
+export const adminpanelpedidoapi = axios.create({
+  baseURL: 'https://tech-store-8fff127c84e2.herokuapp.com/sales/'
 });

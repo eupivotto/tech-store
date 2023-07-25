@@ -5,7 +5,7 @@ import { Contact } from '../Screens/Contact'
 import { SingleProduct } from '../Screens/SingleProduct'
 import { Signup } from '../Screens/Signup'
 import { Cart } from '../Screens/Cart'
-import { AdminPanel } from '../Screens/Admin'
+import { AdministrativePanel} from '../Screens/AdministrativePanel'
 import { Success } from '../Screens/Success'
 
 
@@ -32,7 +32,7 @@ export default function Router () {
         <Route path='/login' element={<Login />} />
         <Route path='/signup' element={<Signup />} />
         <Route path='/cart' element={<Cart />} />
-        <Route path='/admin' element={<AdminPanel />} />
+        <Route path='/admin' element={<AdministrativePanel />} />
         <Route path='/success' element={<Success />} />
         
         

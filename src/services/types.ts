@@ -8,6 +8,7 @@ export interface AuthContextData {
   userSignup:(userData: IUserSignup) => void;
   userLogout: () => void;
   userAdmin: () =>  boolean;
+  userAdminPanel: (name: string) => void,
 }
 
 export type  IUserInfo = {
@@ -56,3 +57,8 @@ export interface IDataProduct {
   Zipcode:string,
   password:string
 }
+
+export type IUserAdminPanel = {
+  name: string;
+  
+};
