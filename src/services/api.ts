@@ -1,29 +1,28 @@
-import axios from 'axios'
+// api.ts
+import axios from 'axios';
+
+const BASE_URL = 'https://tech-store-8fff127c84e2.herokuapp.com';
 
 export const api = axios.create({
-    baseURL: 'https://tech-store-8fff127c84e2.herokuapp.com/product'
-})
+  baseURL: `${BASE_URL}/product`,
+});
+
 export const apitest = axios.create({
-    baseURL: 'https://fakestoreapi.com/products'
-})
-
-
+  baseURL: 'https://fakestoreapi.com/products',
+});
 
 export const userApi = axios.create({
-
-    baseURL: 'https://tech-store-8fff127c84e2.herokuapp.com/users/login'
-})
+  baseURL: `${BASE_URL}/users/login`,
+});
 
 export const userApiAdmin = axios.create({
-
-    baseURL: 'https://tech-store-8fff127c84e2.herokuapp.com/admin/login'
-})
+  baseURL: `${BASE_URL}/admin/login`,
+});
 
 export const categoryApi = axios.create({
-
-    baseURL: 'https://fakestoreapi.com/products/categories'
-})
+  baseURL: 'https://fakestoreapi.com/products/categories',
+});
 
 export const signupapi = axios.create({
-    baseURL: 'https://tech-store-8fff127c84e2.herokuapp.com/users/create'
-  });
+  baseURL: `${BASE_URL}/users/create`,
+});

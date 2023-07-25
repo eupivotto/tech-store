@@ -92,24 +92,22 @@ export const ContainerInputs = styled.div`
 // Estilização do container dos botões
 
 export const ContainerButtons = styled.div`
-    display: flex;
+  display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   gap: 10px;
   margin-top: 20px;
-
-
-cursor: pointer;
-
   background: #000;
     border-radius: 5px;
     font-weight: 700;
     font-size: 1rem;
     line-height: 1.1875rem;
-    color:blue;
     border: 10px solid;
     padding: 8px 68px;
+    cursor: pointer;
+
+    
 
 
     &:not(:disabled):hover {

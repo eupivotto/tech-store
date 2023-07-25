@@ -9,8 +9,10 @@ import { AuthContext } from '../../contexts/Auth'
 
 export const NavBar = () => {
 
-    const { user } = useContext(AuthContext);
+    const { authenticated, user } = useContext(AuthContext);
     const isAdmin = user?.isAdmin === true
+
+    // console.log('Authenticated:', authenticated)
    
 
     return (
@@ -29,7 +31,7 @@ export const NavBar = () => {
                     <NavLink to="/contact" title='Contact'>
                         <span>Contato</span>
                     </NavLink>
-                    {isAdmin && (
+                    {authenticated && isAdmin && (
                     <NavLink to="/admin" title="Admin">
                         <span>Painel Administrativo</span>
                     </NavLink>
@@ -37,13 +39,16 @@ export const NavBar = () => {
                 </nav>
                 
             </ContentLinks>
-                <CartUser>
-                    <CartButton/>
-                    <NavLink to="/login" title='Login'>
-                        <span>Login</span>
-                        
-                    </NavLink>                       
-                </CartUser>                       
+            <CartUser>
+        <CartButton />
+        {authenticated ? (
+          <span>Olá {user?.name}! Você está logado!</span>
+        ) : (
+          <NavLink to="/login" title="Login">
+            <span>Login</span>
+          </NavLink>
+        )}
+      </CartUser>                      
         </HeaderNav>
     )
 }

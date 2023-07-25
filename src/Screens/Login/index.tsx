@@ -1,15 +1,9 @@
 import { AuthContextData } from '../../services/types'
-
-  // type  IUserInfo = {
-  //   email: string,
-  //   password: string,
-  //   isAdmin: boolean,
-  // } 
  
 
 type ZLoginForm = z.infer <typeof LoginFormSchema>
 
-import {  useContext, useEffect, useState  } from 'react'
+import {  useContext, useEffect } from 'react'
 import { ButtonPrimary } from '../../components/Buttton'
 import { AuthContext } from '../../contexts/Auth'
 import { useNavigate, Link } from "react-router-dom"
@@ -24,7 +18,7 @@ import { useForm } from 'react-hook-form'
 //imports zod
 import * as z from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod';
-import { AdminLoginFormSchema, LoginFormSchema } from './scehma';
+import { LoginFormSchema } from './scehma';
 
 // imports styles 
 import { NavBar } from '../../components/Navbar'
@@ -58,10 +52,7 @@ export const Login =() => {
     
     
 
-    const { userLogin, userAdmin, setToken, authenticated } = useContext<AuthContextData>(AuthContext)
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const [ setResponse ] = useState<any>(null);
-    const isAdmin =userAdmin()
+    const { userLogin, setToken, setAuthenticated, authenticated } = useContext<AuthContextData>(AuthContext)
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -70,66 +61,39 @@ export const Login =() => {
       }
     },[authenticated, navigate])
   
-    const onSubmit = (data: ZLoginForm) => {
+    const onSubmit = async (data: ZLoginForm) => {
+      const adminResponse = await loginAdmin(data.email, data.password)
 
-      const adminFormValidation = AdminLoginFormSchema.safeParse(data)
-      
-      if (!adminFormValidation.success) {
-        console.error ('Dados inválidos para API de Administradores:', adminFormValidation.error)
-        return
-      } 
+      if (adminResponse?.admin) {
+        // Usuário é administrador, chamar a API de administradores
+        
+          
 
-
-      if (adminFormValidation.data.isAdmin) {
-        loginAdmin(data.email, data.password)
-          .then((response) => {
-            if (response.data && response.data.admin && response.data.admin.isAdmin) {
-            console.log('Resposta da API de administradores:', response.data);
-            const {token} = response.data
-            if (token) {
-              userLogin(data.email, data.password)
-              setToken(token)
-              localStorage.setItem('@userInfo', JSON.stringify({ emailUser: data.email, token }));
-              console.log('Redirecionando para a página principal')
-               navigate('/');
-        } else {
-          console.error('Token não encontrado na resposta da API de administradores');
-        } 
-      }
-          })
-          .catch((error) => {
-            console.error('Erro na chamada da API de Administradores:', error)
-          })
+                const { token, admin } = adminResponse
+                setToken(token);
+                setAuthenticated(true)
+                localStorage.setItem('@userInfo', JSON.stringify(admin));
+                console.log('Redirecionando para a página principal');
+                navigate('/admin');
+              
+    
       } else {
-      
-      loginNewUser(data.email, data.password)
-        .then((response) => {
-          const token = response.data.token
-          if (token) {
+
+        const userResponse = await loginNewUser(data.email, data.password)
+
+          if (userResponse.token) {
           userLogin(data.email, data.password)
-          setToken(token)  
-            localStorage.setItem('@userInfo', JSON.stringify({ emailUser: data.email, token }))
+          setToken(userResponse.token)
+          setAuthenticated(true)  
+          
+          localStorage.setItem('@userInfo', JSON.stringify({ email: data.email }))
              navigate('/')
+      } else {
+        console.error ('Token não encontrado na resposta da API de usuários')
       }
-
-      setResponse(response)
-      
-    })
-    .catch((error) => {
-      // Lógica para lidar com erros na chamada da API
-      if (error.response) {
-        if (error.response.status === 404) {
-          console.error('Usuário não encontrado')
-        }
-      }
-    });
-  }
-      console.log('Dados enviados para a API de Usuarios', data)
-
-      
-
-     
-      
+  
+    }
+    
      
 }
     return(
@@ -138,7 +102,7 @@ export const Login =() => {
         <ContainerHome>
             <ContainerHomeform>
               <ContainerFormLogin>
-                <FormLogin onSubmit={handleSubmit(onSubmit)}>
+                <FormLogin onSubmit={handleSubmit(async (data) => onSubmit(data))}>
                  <h1>Faça o Login</h1>
                  <ContainerInputs>
                   

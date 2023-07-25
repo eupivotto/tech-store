@@ -1,5 +1,6 @@
 export interface AuthContextData {
   authenticated: boolean;
+  setAuthenticated: (value: boolean) => void;
   user: IUserInfo | null;
   token: string | null;
   setToken: (token: string | null) => void;
@@ -10,6 +11,7 @@ export interface AuthContextData {
 }
 
 export type  IUserInfo = {
+  name?: string;
   email: string,
   password: string,
   isAdmin: boolean
