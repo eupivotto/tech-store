@@ -62,7 +62,7 @@ export const Cart = () => {
   
 
     
-      navigate("/success")
+      navigate("/sucess", { state: { orderData } })
     
 
     }

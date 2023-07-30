@@ -3,7 +3,7 @@ import BgBody from '../../assets/img/bg01.jpg';
 
 export const ContainerHome = styled.div`
   background: var(--background-primary, #EFF2F6);
-  min-height: 100vh;
+  min-height: 1200px;
   width: 100%;
   display: flex;
   align-items: center;
@@ -15,7 +15,7 @@ export const ContainerHomeform = styled.div`
   border: 1px solid;
   width: 90%;
   max-width: 1150px;
-  height: auto;
+  height: 1000px;
   flex-shrink: 0;
   border-radius: 10px;
   padding-top: 30px;
@@ -109,7 +109,6 @@ export const EditButton = styled.button`
   font-size: 1rem;
   line-height: 1.1875rem;
   color: white;
-  border: 2px solid blue;
   padding: 8px 16px;
   margin-right: 10px;
 `;

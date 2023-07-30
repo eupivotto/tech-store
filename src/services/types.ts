@@ -26,6 +26,7 @@ export interface IDataProduct {
     id: string;
     price: number;
     image: string;
+    model: string;
     cartItems: [];
     totalAmount: number; 
     

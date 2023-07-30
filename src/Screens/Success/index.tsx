@@ -16,8 +16,9 @@ import { IDataProduct } from "../../services/types";
 //   }
 
 export const Success = () => {
-    const location = useLocation();
-    const { orderId, cartItems, totalAmount } = location.state.orderData;
+    const location = useLocation()
+  const { orderData } = location.state
+  const { cartItems, totalAmount } = orderData
     
 
     // const totalPrice = cartItems.reduce((acc, item) => {
@@ -34,7 +35,7 @@ export const Success = () => {
          <div>
               <h1>Sucesso!</h1>
               <p>Seu pedido foi finalizado com sucesso!</p>
-              <h2>Número do Pedido: {orderId}</h2>
+              <h2>Número do Pedido: {orderData}</h2>
               <h1>Resumo do Pedido</h1>
             {cartItems.map((item: IDataProduct) => (
             <div key={item.id}>

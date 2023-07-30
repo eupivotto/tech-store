@@ -3,12 +3,19 @@ import styled from "styled-components";
 
 export const ContainerFooter = styled.div`
     width: 100%;
-    height: 350px;
+    height: 320px;
     background-color: #000;
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 0px 30px 0px 30px;
+    
+   
+   
+    @media (max-width: 768px) {
+    flex-direction: column;
+    height: auto;
+  }
     
 
     
@@ -32,6 +39,10 @@ export const ContainerInputFooter = styled.div`
         color: var(--blue-300);
     }
 
+    @media (max-width: 768px) {
+    width: 100%;
+    padding-left: 0;
+  }   
 
 `
 export const FormFooter = styled.form`
@@ -96,7 +107,10 @@ nav{
     display: flex;
     align-items: center;
     flex-direction: column;
-    /* gap: 1.125rem; */
+    
+    @media (max-width: 768px) {
+      width: 100%;
+    }
 }
 
 a {
@@ -109,6 +123,10 @@ a {
     text-decoration: none;
     transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
 
+    @media (max-width: 768px) {
+      width: 100%;
+    }
+
 }
 
 a:after {
@@ -118,9 +136,12 @@ a:after {
 
 a:hover{
     transform:scale(1.25,1.25);
+
 }
 
-
+@media (max-width: 768px) {
+      width: 100%;
+    }
 
 
 
