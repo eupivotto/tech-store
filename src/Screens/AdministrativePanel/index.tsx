@@ -1,8 +1,9 @@
 // Importando os módulos e componentes necessários
-import { useEffect, useState, useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { AuthContext } from '../../contexts/Auth'; // Importando o contexto de autenticação
-import { AuthContextData } from '../../services/types';
+import { useEffect, useState } from 'react';
+import { IDataProduct } from '../../services/types';
+// import { useNavigate } from 'react-router-dom';
+// import { AuthContext } from '../../contexts/Auth'; // Importando o contexto de autenticação
+// import { AuthContextData } from '../../services/types';
 import { NavBar } from '../../components/Navbar'; // Importando o componente de barra de navegação
 import { Footer } from '../../components/Footer'; // Importando o componente do rodapé
 import { adminpanelproductapi, adminpanelusersapi, adminpanelpedidoapi, adminpanelcrateprodutoapi } from '../../services/api'; // Importando as APIs para ações no painel administrativo
@@ -25,6 +26,7 @@ import {
   DeleteButton,
   customModalStyles, // Importando a estilização do modal
 } from './styles';
+
 
 // Definindo os tipos de dados utilizados no componente
 type Product = {
@@ -52,8 +54,8 @@ type Order = {
 
 // Definindo o componente do Painel Administrativo
 export const AdministrativePanel = () => {
-  const { userAdminPanel } = useContext<AuthContextData>(AuthContext); // Obtendo os dados do usuário administrador do contexto
-  const navigate = useNavigate(); // Utilizando a função de navegação
+  // const { userAdminPanel } = useContext<AuthContextData>(AuthContext); // Obtendo os dados do usuário administrador do contexto
+  // const navigate = useNavigate(); // Utilizando a função de navegação
 
   // Definindo os estados do componente
   
@@ -120,7 +122,7 @@ export const AdministrativePanel = () => {
   const loadProducts = async () => {
     try {
       const response = await adminpanelproductapi.get('/');
-      const productsData: Product[] = response.data.map((product: any) => ({
+      const productsData: Product[] = response.data.map((product: IDataProduct) => ({
         id: product.id,
         name: product.name,
         price: product.price,
@@ -146,7 +148,8 @@ export const AdministrativePanel = () => {
   const loadUsers = async () => {
     try {
       const response = await adminpanelusersapi.get('/');
-      const usersData: User[] = response.data.map((user: any) => ({
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const usersData: User[] = response.data.map((user:any) => ({
         id: user.id,
         name: user.name,
         email: user.email,
@@ -169,7 +172,7 @@ export const AdministrativePanel = () => {
   const loadOrders = async () => {
     try {
       const response = await adminpanelpedidoapi.get('/');
-      const ordersData: Order[] = response.data.map((order: any) => ({
+      const ordersData: Order[] = response.data.map((order: Order) => ({
         id: order.id,
         user_id: order.user_id,
         amount: order.amount,
@@ -409,26 +412,27 @@ export const AdministrativePanel = () => {
         style={customModalStyles} // Estilo do modal
         contentLabel="Adicionar Novo Produto"
       >
+        <div className='react-modal-panel'>
         <h2>Adicionar Novo Produto</h2>
-        <form>
+        <form className='react-modal-content'>
           <div>
-            <label>Nome:</label>
+            <label> Nome:  </label>
             <input type="text" name="name" value={newProduct.name} onChange={handleInputChange} />
           </div>
           <div>
-            <label>Preço:</label>
+            <label>Preço:  </label>
             <input type="number" step="0.01" name="price" value={newProduct.price} onChange={handleInputChange} />
           </div>
           <div>
-            <label>Marca:</label>
+            <label>Marca:  </label>
             <input type="text" name="brand" value={newProduct.brand} onChange={handleInputChange} />
           </div>
           <div>
-            <label>Modelo:</label>
+            <label>Modelo: </label>
             <input type="text" name="model" value={newProduct.model} onChange={handleInputChange} />
           </div>
           <div>
-            <label>Descrição:</label>
+            <label>Descrição:   </label>
             <input type="text" name="description" value={newProduct.description} onChange={handleInputChange} />
           </div>
           <div>
@@ -436,8 +440,9 @@ export const AdministrativePanel = () => {
             <input type="text" name="image" value={newProduct.image} onChange={handleInputChange} />
           </div>
         </form>
-        <button type="button" onClick={handleCreateProduct}>Adicionar</button>
-        <button type="button" onClick={handleCloseModal}>Cancelar</button>
+        <button className='button-modal-add' type="button" onClick={handleCreateProduct}>Adicionar</button>
+        <button  className='button-modal-cancel' type="button" onClick={handleCloseModal}>Cancelar</button>
+        </div>              
       </Modal>
     </>
   );
