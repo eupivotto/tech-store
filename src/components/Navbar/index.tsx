@@ -45,7 +45,7 @@ export const NavBar = () => {
           <span>Olá {user?.name}! Você está logado!</span>
         ) : (
           <NavLink to="/login" title="Login">
-            <span>Login</span>
+            <span>Login</span><p>User ou Admin</p>
           </NavLink>
         )}
       </CartUser>                      

@@ -74,6 +74,15 @@ display: flex;
 align-items: center;
 gap: 40px;
 
+p{
+    font-weight: 200;
+    
+}
+
+span{
+    margin-right: 10px;
+}
+
 a {
     display: flex;
     align-items: center;

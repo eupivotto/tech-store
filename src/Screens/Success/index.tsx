@@ -1,30 +1,48 @@
 import { NavBar } from "../../components/Navbar"
 import { Footer } from "../../components/Footer"
-import { ContainerHome } from "./styles"
-
-
-import { useLocation } from "react-router-dom"
-// import { useContext } from "react";
-// import { CartContext } from '../../contexts/Cartcontext'
+import { ContainerHome, ContainerResume, TotalPrice, PaymentFinally } from "./styles"
+import { IOrderData } from '../../services/types'
+import { NavLink } from 'react-router-dom'
+import { useLocation, useNavigate } from "react-router-dom"
 import { IDataProduct } from "../../services/types";
+import { useEffect } from "react"
 
 
-// interface SuccessProps {
-//     // Defina os tipos dos dados do pedido aqui, por exemplo:
-//     orderId: string;
-//     totalAmount: number;
-//   }
 
 export const Success = () => {
-    const location = useLocation()
-  const { orderData } = location.state
+  
+  const location = useLocation()
+  const orderData = location.state as IOrderData | undefined
+  const navigate = useNavigate()
+  
+  useEffect(() => {
+    // Verificar se os itens do carrinho estão armazenados no localStorage
+    const storedCartItems = localStorage.getItem("cartItems");
+
+    if (storedCartItems) {
+      // Se os itens do carrinho foram encontrados no localStorage,
+      // converta a string JSON de volta para um array de objetos
+      const cartItemsFromLocalStorage = JSON.parse(storedCartItems);
+      
+      // Faça o que quiser com os itens do carrinho recuperados do localStorage
+      console.log("Itens do carrinho do localStorage:", cartItemsFromLocalStorage);
+    }
+  }, []); // Executa este efeito apenas uma vez no carregamento inicial da página
+
+
+  if (!orderData) {
+    navigate('/'); 
+   
+    return <p>Erro: Dados do pedido não encontrados.</p>;
+  }
+
+
   const { cartItems, totalAmount } = orderData
+
+  
     
 
-    // const totalPrice = cartItems.reduce((acc, item) => {
-    //     return item.price + acc;
-    //   }, 0);
-
+    
 
 
     return (
@@ -32,21 +50,28 @@ export const Success = () => {
          
          <NavBar/>
          <ContainerHome>
-         <div>
+         <ContainerResume>
               <h1>Sucesso!</h1>
               <p>Seu pedido foi finalizado com sucesso!</p>
-              <h2>Número do Pedido: {orderData}</h2>
               <h1>Resumo do Pedido</h1>
             {cartItems.map((item: IDataProduct) => (
             <div key={item.id}>
             <img src={item.image} alt={item.name} style={{ width: "100px" }} />
             <h2>{item.name}</h2>
-            <p>Preço: {item.price}</p>               
-        </div>
-            ))}
-            <h3>Total: R$ {totalAmount}</h3>
-            {/* Implemente o restante da página, como o formulário de dados do cliente e o botão de finalizar compra */}
+            <p>Preço: {item.price}</p>
             </div>
+            ))}
+            <TotalPrice>
+            <h3>Total: R$ {totalAmount}</h3>
+            </TotalPrice>
+
+            <PaymentFinally>
+               <NavLink to="/login" title="Login">
+               <a>Faça o Login e finalize seu pagamento</a>
+               </NavLink>
+            </PaymentFinally>
+            
+            </ContainerResume>
          </ContainerHome>
          <Footer/>
         

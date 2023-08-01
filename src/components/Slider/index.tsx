@@ -56,8 +56,12 @@ export const Slider = () => {
         navigation
         pagination={{ clickable: true }}
         scrollbar={{ draggable: true }}
-        onSwiper={(swiper: unknown) => console.log(swiper)}
-        onSlideChange={() => console.log('slide change')}
+        onSwiper={(swiper: unknown) => {
+          // console.log(swiper); //
+        }}
+        onSlideChange={() => {
+          // console.log('slide change'); // 
+        }}
         >
         <SwiperSlide><img src={SliderMac} alt="" /></SwiperSlide>
         <SwiperSlide><img src={SliderMouse} alt="" /></SwiperSlide>

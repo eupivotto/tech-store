@@ -149,22 +149,34 @@ export const ContainerSubTitulo = styled.p`
 
 // Estilização do Modal
 export const customModalStyles = {
+  
+  
+  
+
   overlay: {
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
 
   },
+
   content: {
     top: '50%',
     left: '50%',
     right: 'auto',
     bottom: 'auto',
-    marginRight: '-50%',
+    marginRight: '50%',
+    // color:'blue',
     transform: 'translate(-50%, -50%)',
     border: 'none',
     borderRadius: '10px',
+    backgroundColor: '#fff',
     boxShadow: '0px 0px 28px 0px rgba(0,0,0,0.38)',
     padding: '30px',
-    maxWidth: '400px',
-    width: '100%',
+    maxWidth: '700px',
+    
+    
   },
+
+  
+
 };
+

@@ -412,26 +412,27 @@ export const AdministrativePanel = () => {
         style={customModalStyles} // Estilo do modal
         contentLabel="Adicionar Novo Produto"
       >
+        <div className='react-modal-panel'>
         <h2>Adicionar Novo Produto</h2>
-        <form>
+        <form className='react-modal-content'>
           <div>
-            <label>Nome:</label>
+            <label> Nome:  </label>
             <input type="text" name="name" value={newProduct.name} onChange={handleInputChange} />
           </div>
           <div>
-            <label>Preço:</label>
+            <label>Preço:  </label>
             <input type="number" step="0.01" name="price" value={newProduct.price} onChange={handleInputChange} />
           </div>
           <div>
-            <label>Marca:</label>
+            <label>Marca:  </label>
             <input type="text" name="brand" value={newProduct.brand} onChange={handleInputChange} />
           </div>
           <div>
-            <label>Modelo:</label>
+            <label>Modelo: </label>
             <input type="text" name="model" value={newProduct.model} onChange={handleInputChange} />
           </div>
           <div>
-            <label>Descrição:</label>
+            <label>Descrição:   </label>
             <input type="text" name="description" value={newProduct.description} onChange={handleInputChange} />
           </div>
           <div>
@@ -439,8 +440,9 @@ export const AdministrativePanel = () => {
             <input type="text" name="image" value={newProduct.image} onChange={handleInputChange} />
           </div>
         </form>
-        <button type="button" onClick={handleCreateProduct}>Adicionar</button>
-        <button type="button" onClick={handleCloseModal}>Cancelar</button>
+        <button className='button-modal-add' type="button" onClick={handleCreateProduct}>Adicionar</button>
+        <button  className='button-modal-cancel' type="button" onClick={handleCloseModal}>Cancelar</button>
+        </div>              
       </Modal>
     </>
   );

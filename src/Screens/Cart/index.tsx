@@ -35,11 +35,15 @@ export const Cart = () => {
     const [totalAmount, setTotalAmount] = useState(0)
     const { authenticated } = useContext<AuthContextData>(AuthContext)
 
+    
+
     // Estado para armazenar os dados do pedido
     const [ orderData, setOrderData ] = useState<IOrderData | undefined>()
 
 
     useEffect(() => {
+      console.log("Itens do carrinho:", cartItems)
+      localStorage.setItem("cartItems", JSON.stringify(cartItems))
       //Calculando total de itens do carrinho usando o reduce
       const totalPrice = cartItems.reduce((acc, item) => item.price + acc, 0);
       setTotalAmount(totalPrice);
@@ -47,13 +51,17 @@ export const Cart = () => {
     
     const handleContinueToPayment = () => {
     
+      console.log("authenticated:", authenticated)
+
 
       setOrderData({
         cartItems,
         totalAmount,
       });
 
-      if (!authenticated) {
+      localStorage.setItem("cartItems", JSON.stringify(cartItems))
+
+      if (authenticated) {
         // Redirecionar para a página de login se o usuário não estiver autenticado
         toggleCartVisibility()
         navigate("/login");
@@ -62,7 +70,7 @@ export const Cart = () => {
   
 
     
-      navigate("/sucess", { state: { orderData } })
+      navigate("/success", { state: { cartItems, totalAmount } })
     
 
     }
