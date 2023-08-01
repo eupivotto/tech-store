@@ -25,31 +25,73 @@ export const GlobalStyle = createGlobalStyle`
 
 
 
-.react-modal-overlay {
-    background: rgba(0, 0, 0, 0.5);
+.react-modal-panel {
+  color: var(--blue-300);
+  padding: 0px 10px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
 
-    /* overlay occupying all screen  */
-    /* Ocupando tela toda o overlay */
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    right: 0;
-    left: 0;
+    h2 {
+        color: var(--blue-300);
+    }
 
-    /* White box of the modal stay always in the middle */
-    /* Box branco do modal ficar sempre no meio */
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    
+}
+
+.react-modal-iputs {
+    margin: 1.375rem 0;
+    width: 455px;
+    flex-shrink: 0;
+    padding: 0 15px;
+}
+
+.button-modal-add{
+
+  width: 120px;
+  height: 30px;  
+  margin-top: 20px;
+  cursor: pointer;
+  text-decoration: none;
+  color: #fff;
+  background-color: #000;
+  border-radius: 6px;
+  border:none;
+
+}
+.button-modal-cancel{
+
+  width: 120px;
+  height: 30px;  
+  margin-top: 10px;
+  margin-bottom: 6px;
+  cursor: pointer;
+  text-decoration: none;
+  color: #fff;
+  background-color: red;
+  border-radius: 6px;
+  border:none;
+
 }
 
 .react-modal-content {
+
     width: 100%;
-    max-width: 576px;
-    background-color: var(--blue-300);
-    padding: 3rem;
+    max-width: 600px;
+    background-color: #fff;
+    padding: 10px;
     position: relative;
     border-radius: 0.25rem;
+
+
+    input {
+    margin: 10px 0;
+    width: 355px;
+    height: 25px;
+    /* flex-shrink: 0; */
+    padding: 0 15px;
+    }
 }
 
 .react-modal-close {

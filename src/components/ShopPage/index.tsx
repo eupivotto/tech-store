@@ -113,7 +113,7 @@ export const ShopPage = () => {
         </ContainerFilters>
         
 
-        {loading ? (
+        {/* {loading ? (
         <Loading />
         ) : (
         posts.length > 0 && (
@@ -139,7 +139,7 @@ export const ShopPage = () => {
               ))}
             </ContainerProductsUl>
         )
-     )}
+     )} */}
 
         </ContainerHome>
  

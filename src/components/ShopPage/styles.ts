@@ -7,8 +7,9 @@ import BgBody from '../../assets/img/bg01.jpg'
 
 export const ContainerHome = styled.div`
   
-    height: 100vh;
+    height: 500px;
     width: 100%;
+    min-height: 100vh;
     margin-top: 500px;
     display: flex;
     align-items: center;
@@ -75,7 +76,7 @@ export const DivCategory = styled.div`
 `
 export const ContainerProductsUl = styled.ul`
     width: 100%;
-    height: 53rem;
+    height: auto;
     display: flex;
     align-items: center;
     padding: 0px 12px 0px 12px;
@@ -83,7 +84,11 @@ export const ContainerProductsUl = styled.ul`
     flex-wrap: wrap;
     gap: 16px;
 
-  
+    @media screen and (max-width: 768px) {
+    flex-direction: column; 
+    flex-wrap: wrap;
+    align-items: center; 
+  }
 
     
 `
@@ -104,7 +109,14 @@ export const LiProduct = styled.li`
     transform: translate(5px, -5px);
   }
 
-    
+  @media screen and (max-width: 768px) {
+    width: 100%; 
+    max-width: 275px; 
+    height: auto; /* A altura será ajustada automaticamente para manter a proporção */
+    margin-bottom: 20px; 
+  }
+  
+
 `
 export const TitleProduct = styled.p`
    

@@ -1,4 +1,7 @@
+import { useState, useEffect } from 'react';
+
 //import Swiper slider 
+
 import {Autoplay, Navigation, Pagination, Scrollbar, A11y } from 'swiper';
 import { SwiperSlide } from 'swiper/react';
 
@@ -20,9 +23,27 @@ import 'swiper/css/scrollbar';
 
 
 export const Slider = () => {
+  const [showSlider, setShowSlider] = useState(true)
+
+  useEffect(() => {
+    const handleResize = () => {
+      setShowSlider(window.innerWidth >= 900);
+    }
+
+    window.addEventListener('resize', handleResize)
+
+    handleResize();
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
   
 
     return (
+
+      <>
+      {showSlider && (
         <StyledSwiper 
         // install Swiper modules
         modules={[Autoplay, Navigation, Pagination, Scrollbar, A11y]}
@@ -35,8 +56,12 @@ export const Slider = () => {
         navigation
         pagination={{ clickable: true }}
         scrollbar={{ draggable: true }}
-        onSwiper={(swiper: unknown) => console.log(swiper)}
-        onSlideChange={() => console.log('slide change')}
+        onSwiper={(swiper: unknown) => {
+          // console.log(swiper); //
+        }}
+        onSlideChange={() => {
+          // console.log('slide change'); // 
+        }}
         >
         <SwiperSlide><img src={SliderMac} alt="" /></SwiperSlide>
         <SwiperSlide><img src={SliderMouse} alt="" /></SwiperSlide>
@@ -45,6 +70,8 @@ export const Slider = () => {
         ...
         
         </StyledSwiper>
+        )}
+        </>
             )
         }
 

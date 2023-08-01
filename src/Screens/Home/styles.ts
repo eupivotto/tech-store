@@ -5,7 +5,8 @@ import BgBody from '../../assets/img/bg01.jpg'
 
 export const ContainerBody = styled.div`
 width: 100%;
-height: 231.25rem;
+/* height: 3400px; */
+min-height: 100vh;
 display:flex;
 align-items:center;
 flex-direction:column;
@@ -14,6 +15,16 @@ gap:20px;
 color: #fff;
 background-image: url(${BgBody});
 
+
+
+@media screen and (max-width: 768px) {
+    padding-left: 30px; 
+    padding-right: 30px;
+    min-height: auto; 
+    
+  }
+
+  
 
 
 `
@@ -34,15 +45,15 @@ display: flex;
 `
 export const ContainerProductsUl = styled.ul`
     width: 100%;
-    height: 25rem;
+    height: auto;
     display: flex;
     align-items: center;
-    margin-left: 20px;
-    margin-right: 20px;
+    margin: 0px 20px 40px 20px;
     justify-content: center;
     flex-wrap: wrap;
     gap: 30px;
 
+   
     
 `
 export const LiProduct = styled.li`
@@ -62,6 +73,12 @@ export const LiProduct = styled.li`
     transform: translate(5px, -5px);
   }
 
+  @media screen and (max-width: 768px) {
+    width: 100%; 
+    max-width: 275px; 
+    height: auto; /* A altura será ajustada automaticamente para manter a proporção */
+    margin-bottom: 20px; 
+  }
     
 `
 export const TitleProduct = styled.p`
@@ -96,7 +113,9 @@ height: 18.75rem;
 position: relative;
 z-index: 1; 
 
-
+@media screen and (max-width: 768px) {
+    display: none; /* Faz a div desaparecer em telas menores */
+  }
 
 
 `
@@ -117,6 +136,12 @@ margin-bottom: 20px;
 display: flex;
 align-items: center;
 justify-content: center;
+
+
+
+@media screen and (max-width: 768px) {
+    width: 100%; 
+  }
 
 
 
@@ -150,5 +175,35 @@ button:hover {
     background-color: var(--blue-300);
     
 }
+
+`
+
+export const ContainerTitle = styled.div`
+    
+    height: 100px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    margin-top: 100px;
+    
+
+    background-color: #fff;
+
+    @media screen and (max-width: 768px) {
+    height: 80px;
+  }
+
+
+`
+
+export const BoxIcon = styled.img`
+    width: 43.875rem;
+    height: 6.25rem;
+   
+
+    @media screen and (max-width: 768px) {
+    width: 100%; 
+    height: auto; /
+  }
 
 `

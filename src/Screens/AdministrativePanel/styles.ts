@@ -3,7 +3,7 @@ import BgBody from '../../assets/img/bg01.jpg';
 
 export const ContainerHome = styled.div`
   background: var(--background-primary, #EFF2F6);
-  min-height: 100vh;
+  min-height: 1200px;
   width: 100%;
   display: flex;
   align-items: center;
@@ -15,7 +15,7 @@ export const ContainerHomeform = styled.div`
   border: 1px solid;
   width: 90%;
   max-width: 1150px;
-  height: auto;
+  height: 1000px;
   flex-shrink: 0;
   border-radius: 10px;
   padding-top: 30px;
@@ -109,7 +109,6 @@ export const EditButton = styled.button`
   font-size: 1rem;
   line-height: 1.1875rem;
   color: white;
-  border: 2px solid blue;
   padding: 8px 16px;
   margin-right: 10px;
 `;
@@ -150,22 +149,34 @@ export const ContainerSubTitulo = styled.p`
 
 // Estilização do Modal
 export const customModalStyles = {
+  
+  
+  
+
   overlay: {
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
 
   },
+
   content: {
     top: '50%',
     left: '50%',
     right: 'auto',
     bottom: 'auto',
-    marginRight: '-50%',
+    marginRight: '50%',
+    // color:'blue',
     transform: 'translate(-50%, -50%)',
     border: 'none',
     borderRadius: '10px',
+    backgroundColor: '#fff',
     boxShadow: '0px 0px 28px 0px rgba(0,0,0,0.38)',
     padding: '30px',
-    maxWidth: '400px',
-    width: '100%',
+    maxWidth: '700px',
+    
+    
   },
+
+  
+
 };
+

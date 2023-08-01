@@ -82,6 +82,7 @@ export const Login =() => {
         const userResponse = await loginNewUser(data.email, data.password)
 
           if (userResponse.token) {
+          console.log('Token definido:', userResponse.token)
           userLogin(data.email, data.password)
           setToken(userResponse.token)
           setAuthenticated(true)  

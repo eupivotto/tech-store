@@ -7,6 +7,7 @@
   import { NavBar } from '../../components/Navbar'
   import { Footer } from '../../components/Footer'
   import { Loading } from '../../components/Loading'
+  import OfferImg  from '../../assets/img/offer.jpg'
   import { Cart } from '../../Screens/Cart'
   
   import { Link } from 'react-router-dom'
@@ -29,12 +30,17 @@
            ContainerProductsUl,
            LiProduct,
            ButtonCartCard,
-           ContainerCartHome
+           ContainerCartHome,
+           ContainerTitle,
+           BoxIcon
+
+           
+           
            
            
            } 
            from './styles'
-import { ShopPage } from '../../components/ShopPage';
+// import { ShopPage } from '../../components/ShopPage';
   
   
       
@@ -75,6 +81,7 @@ import { ShopPage } from '../../components/ShopPage';
           <>
           
           <NavBar />
+         
           <ContainerBody>
         <h1>Os Melhores Produtos com Ofertas Imbatíveis!</h1>
         <p>Entregamos para todo o Brasil, com pagamento facilitado, atendimento especializado e compra 100% segura!</p>
@@ -120,10 +127,45 @@ import { ShopPage } from '../../components/ShopPage';
         )
      )}
      
-          <ShopPage/>
+        <ContainerTitle>
+            <BoxIcon src={OfferImg} alt="icon" />
+        </ContainerTitle>
+
+        <h1>Produtos em Oferta!</h1>
+        {loading ? (
+        <Loading />
+        ) : (
+        posts.length > 0 && (
+            <ContainerProductsUl>  
+              {posts.map((product) => (
+                <LiProduct key={product.id}>
+                  
+                  <div>
+                  <Link to={`/product/${product.id}`}>
+                    <TitleProduct>{product.name}</TitleProduct>
+                    <ImageProduct src={product.image} alt={product.name} />
+                  </Link>
+                    <PriceProduct>R$ {product.price}</PriceProduct>
+                    <ButtonCartCard>
+                      <button type="button" onClick={() => addToCart(product)}>
+                       <p>Adicionar ao Carrinho</p> 
+                      <ShoppingCart size={25} color="#9cc0ff" />
+                      </button>
+                    </ButtonCartCard>
+                  </div>
+                  
+                </LiProduct>
+              ))}
+            </ContainerProductsUl>
+        )
+     )}
           
       </ContainerBody>
+      
+
+      
       <Footer/>
+      
       
           </>
       )

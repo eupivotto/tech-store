@@ -99,8 +99,8 @@ export const AuthProvider = ({ children }:{ children: ReactNode }) => {
         navigate('/login')
     }
 
-    const userAdminPanel = (userData: IUserSignup) => {
-      console.log('AdminPanel auth', userData);
+    const userAdminPanel = (name: string) => {
+      console.log('AdminPanel auth', name);
       setUser(userData);
     };
 
