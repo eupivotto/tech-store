@@ -56,6 +56,7 @@ export const Slider = () => {
         navigation
         pagination={{ clickable: true }}
         scrollbar={{ draggable: true }}
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         onSwiper={(swiper: unknown) => {
           // console.log(swiper); //
         }}

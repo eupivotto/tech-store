@@ -51,6 +51,7 @@ export const Category: React.FC<CategoriesProps> = ({handleGetProducts}) => {
 
     }, [])
 
+    console.log(selectedCategory)
     return (
         <ContainerCategory>
         <h2>Categorias:</h2>
