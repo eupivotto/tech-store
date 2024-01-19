@@ -50,9 +50,9 @@ a {
     text-decoration: none;
     gap: 4px;
     transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
-
-    @media (max-width: 768px) {
-      display: none;
+ax-width: 768px) {
+      display
+    @media (m: none;
     }
 
 

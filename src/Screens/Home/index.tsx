@@ -49,7 +49,7 @@
   export const Home = () => {
   
       //Variavel para link da API
-      const linkGetProducts = 'https://tech-store-8fff127c84e2.herokuapp.com/product'
+      const url = 'https://fakestoreapi.com/products'
       const { addToCart } = useCart()
       const [posts, setPosts] = useState<IDataProduct[]>([])
       const [loading, setLoading] = useState (true)
@@ -59,7 +59,7 @@
   
       //Consumindo a API utilizando o Axios e resgatando os dados atrves do data 
       const handleGetProducts = (): void => {
-        api.get(linkGetProducts)
+        api.get(url)
           .then((response) => {
             const dataProduct: IDataProduct[] = response.data;
             setPosts(dataProduct)
@@ -68,6 +68,7 @@
           .catch((error) => {
             console.log('Erro ao listar produtos:', error)
           })
+
       }
       
     
@@ -108,9 +109,9 @@
                 <LiProduct key={product.id}>
                   
                   <div>
-                  <Link to={`/product/${product.id}`}>
-                    <TitleProduct>{product.name}</TitleProduct>
-                    <ImageProduct src={product.image} alt={product.name} />
+                  <Link to={`/products/${product?.id}`}>
+                    <TitleProduct>{product.title}</TitleProduct>
+                    <ImageProduct src={product.image} alt={product.title} />
                   </Link>
                     <PriceProduct>R$ {product.price}</PriceProduct>
                     <ButtonCartCard>
@@ -141,9 +142,9 @@
                 <LiProduct key={product.id}>
                   
                   <div>
-                  <Link to={`/product/${product.id}`}>
-                    <TitleProduct>{product.name}</TitleProduct>
-                    <ImageProduct src={product.image} alt={product.name} />
+                  <Link to={`/product/${product?.id}`}>
+                    <TitleProduct>{product.title}</TitleProduct>
+                    <ImageProduct src={product.image} alt={product.title} />
                   </Link>
                     <PriceProduct>R$ {product.price}</PriceProduct>
                     <ButtonCartCard>

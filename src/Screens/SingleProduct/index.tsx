@@ -19,7 +19,6 @@ import { ContainerHome,
        ImageProduct,
        PriceProduct,
        DescriptionProduct,
-       BrandProduct,
        ContainerButtons
 
 } from "./styles"
@@ -32,51 +31,48 @@ export const SingleProduct:  React.FC = () => {
 
   const { id } = useParams<RouteParams>();
   const [product, setProduct] = useState<IDataProductId | null>(null)
+  
 
   useEffect(() => {
       const fetchProduct = async () => {
         try {
           const response = await api.get(`/${id}`)
-          const dataProduct: IDataProductId = response.data[0]
-          setProduct(dataProduct)
+          
+          const dataProduct: IDataProductId = response.data
+          setProduct(dataProduct)       
+          
         } catch (error) {
           console.log('Erro ao obter detalhes do produto:', error)
         }
       };
-  
+      
       fetchProduct()
     }, [id])
   
-    if (!product) {
-      return <div>Carregando...</div> //  outra forma de indicar o carregamento
-    }
+    
 
   return(
-      <>
-      <NavBar/>
-      <ContainerHome>
-          <ContainerProduct>
-
-              <div>
-          <ImageProduct src={product.image} alt={product.name} />
-              </div>
-
-              <div>
-          <TitleProduct>{product.name}</TitleProduct>
-          <DescriptionProduct>{product.description}</DescriptionProduct>
-          <BrandProduct>Categoria: {product.brand}</BrandProduct>
-          <PriceProduct>Preço: R$ {product.price}</PriceProduct>
-          <ContainerButtons>
-                  <ButtonPrimary type="submit" title={'Comprar'} disabled = {false} isLoading = {false} />
-          </ContainerButtons>
-             </div>
+    <>
+    <NavBar />
+    <ContainerHome>
+      <ContainerProduct>
+        <div>
           
-             
-              
-          </ContainerProduct>
-      </ContainerHome>
-      <Footer/>
-      </>
+          <ImageProduct src={product?.image} alt={product?.title} />
+        </div>
+        <div>
+          
+          <TitleProduct>{product?.title}</TitleProduct>
+          <DescriptionProduct>{product?.description}</DescriptionProduct>
+          <PriceProduct>Preço: R$ {product?.price}</PriceProduct>
+          <ContainerButtons>
+            <ButtonPrimary type="submit" title={'Comprar'} disabled={false} isLoading={false} />
+          </ContainerButtons>
+        </div>
+      </ContainerProduct>
+    </ContainerHome>
+    <Footer />
+  </>
   )
 
 

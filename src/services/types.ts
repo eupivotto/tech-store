@@ -14,22 +14,20 @@ export interface AuthContextData {
 export type  IUserInfo = {
  
   name?: string;
-  email: string,
-  password: string,
-  isAdmin: boolean
+  email?: string,
+  password?: string,
+  isAdmin?: boolean
+  user?: string;
 } 
 
 export interface IDataProduct {
-    name: string;
-    category: string;
-    description: string;
-    brand: string;
+    title?: string;
+    category?: string;
+    description?: string;
     id: string;
-    price: number;
-    image: string;
-    model: string;
-    cartItems: [];
-    totalAmount: number; 
+    price?: number;
+    image?: string;
+    cartItems?: [];
     
     }   
 
@@ -41,13 +39,11 @@ export interface IDataProduct {
 
 
  export interface IDataProductId {
-    name: string;
-    id: string;
-    price: number;
-    image: string;
-    brand: string;
-    description: string;
-    category: string;
+    title?: string;
+    id?: string;
+    price?: number;
+    image?: string;
+    description?: string;
  }     
 
  export type IUserSignup = {

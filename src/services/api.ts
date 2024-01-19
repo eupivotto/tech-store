@@ -1,15 +1,16 @@
 // api.ts
 import axios from 'axios';
 
-const BASE_URL = 'https://tech-store-8fff127c84e2.herokuapp.com';
+const BASE_URL = 'https://fakestoreapi.com/products';
 
 export const api = axios.create({
-  baseURL: `${BASE_URL}/product`,
+  baseURL: `${BASE_URL}`,
 });
 
-export const apitest = axios.create({
-  baseURL: 'https://fakestoreapi.com/products',
+export const apiProduct = axios.create({
+  baseURL: `${BASE_URL}/{id}`,
 });
+
 
 export const userApi = axios.create({
   baseURL: `${BASE_URL}/users/login`,

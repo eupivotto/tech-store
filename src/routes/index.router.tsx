@@ -27,7 +27,7 @@ export default function Router () {
 
             
 
-        <Route path='/product/:id' element={<SingleProduct />} />
+        <Route path='/products/:id' element={<SingleProduct />} />
         <Route path='/' element={<Home />} />
         <Route path='/contact' element={<Contact />} />
         <Route path='/about' element={<About />} />
