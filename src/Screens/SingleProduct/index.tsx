@@ -19,7 +19,8 @@ import { ContainerHome,
        ImageProduct,
        PriceProduct,
        DescriptionProduct,
-       ContainerButtons
+       ContainerButtons,
+       CategoryProduct
 
 } from "./styles"
 import { ButtonPrimary } from '../../components/Buttton';
@@ -40,7 +41,7 @@ export const SingleProduct:  React.FC = () => {
           
           const dataProduct: IDataProductId = response.data
           setProduct(dataProduct)       
-          
+          console.log(dataProduct)
         } catch (error) {
           console.log('Erro ao obter detalhes do produto:', error)
         }
@@ -65,6 +66,7 @@ export const SingleProduct:  React.FC = () => {
           <TitleProduct>{product?.title}</TitleProduct>
           <DescriptionProduct>{product?.description}</DescriptionProduct>
           <PriceProduct>Preço: R$ {product?.price}</PriceProduct>
+          <CategoryProduct>Categoria: {product?.category}</CategoryProduct>
           <ContainerButtons>
             <ButtonPrimary type="submit" title={'Comprar'} disabled={false} isLoading={false} />
           </ContainerButtons>

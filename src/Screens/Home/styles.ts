@@ -107,6 +107,8 @@ export const PriceProduct = styled.p`
 
 
 
+
+
 export const ContainerSlider = styled.div`
 width:75rem;
 height: 18.75rem;

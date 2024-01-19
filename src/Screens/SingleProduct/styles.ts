@@ -45,7 +45,7 @@ export const TitleProduct = styled.p`
 `
 export const DescriptionProduct = styled.p`
    
-   width: 500px;
+    width: 500px;
     font-size:14px;
     color: #fff;
     margin-bottom:10px;
@@ -84,6 +84,16 @@ export const PriceProduct = styled.p`
 
     
 `
+
+export const CategoryProduct = styled.p`
+
+width: 500px;
+    font-size:14px;
+    color: #fff;
+    margin-bottom:10px;
+
+`
+
 export const ContainerButtons = styled.div`
   display: flex;
   align-items: center;

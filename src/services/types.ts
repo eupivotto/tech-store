@@ -44,6 +44,7 @@ export interface IDataProduct {
     price?: number;
     image?: string;
     description?: string;
+    category?: string;
  }     
 
  export type IUserSignup = {
